@@ -5,8 +5,11 @@
 ### After:
 ![After](https://cdn.discordapp.com/attachments/1227619225787433052/1227692831150313543/image.png?ex=6629550c&is=6616e00c&hm=d32dc2b5b08ce36e7ac9ca32668f4e282644bb3311d7792c00bc426ebf1015d9&)
 
-#
+## Installation
 
+[Download the plugin](https://github.com/Nevylish/com.elgato.wavelink.sdPlugin/archive/refs/heads/main.zip), unzip and replace the folder at C:\Users\---\AppData\Roaming\Elgato\StreamDeck\Plugins
+
+#
 TODO: 
  - Changement automatique des couleurs des icônes (pas les faders c'est déjà le cas mais les svg dans /images/key/inputActions ex: musicMonitor.svg) selon celles de Wave Link (pour les bidouilleurs ultimes)
  - Corriger les erreurs lorsque les icônes colorées sont désactivées 

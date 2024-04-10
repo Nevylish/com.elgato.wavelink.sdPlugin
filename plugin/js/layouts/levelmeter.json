@@ -1,0 +1,29 @@
+{
+    "id": "com.elgato.wavelink.levelmeter",
+    "items": [
+      {
+        "key": "title",
+        "type": "text",
+        "rect": [16, 10, 136, 24],
+        "font": { "size": 16, "weight": 600 },
+        "alignment": "left"
+      },
+      {
+        "key": "icon",
+        "type": "pixmap",
+        "rect": [16, 40, 48, 48]
+      },
+      {
+        "key": "value",
+        "type": "text",
+        "rect": [76, 40, 108, 32],
+        "font": { "size": 24, "weight": 600 },
+        "alignment": "right"
+      },
+      {
+        "key": "levelmeter",
+        "type": "pixmap",
+        "rect": [76, 74, 108, 20]
+      }
+    ]
+}

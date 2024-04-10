@@ -1,0 +1,298 @@
+{
+    "Name": "Wave Link",
+    "Category": "Wave Link",
+    "Description": "Elgato Wave Link 오디오 믹싱 응용 프로그램을 제어합니다.",
+    "com.elgato.wavelink.inputaction": {
+        "Name": "입력",
+        "Tooltip": "입력 및 믹스에 대한 설정, 조정 또는 음소거",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ],
+        "Encoder": {
+            "TriggerDescription": {
+                "Rotate": "음량 조정",
+                "Touch": "음소거/음소거 해제"
+            }
+        }
+    },
+    "com.elgato.wavelink.mixermute": {
+        "Name": "입력",
+        "Tooltip": "입력 및 믹스에 대한 설정, 조정 또는 음소거",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setvolumemixer": {
+        "Name": "입력",
+        "Tooltip": "입력 및 믹스에 대한 설정, 조정 또는 음소거",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.adjustvolumemixer": {
+        "Name": "입력",
+        "Tooltip": "입력 및 믹스에 대한 설정, 조정 또는 음소거",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.outputaction": {
+        "Name": "출력",
+        "Tooltip": "출력 음량 설정, 조정, 음소거 또는 믹스 전환",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ],
+        "Encoder": {
+            "TriggerDescription": {
+                "Rotate": "음량 조정",
+                "Touch": "음소거/음소거 해제"
+            }
+        }
+    },
+    "com.elgato.wavelink.monitormute": {
+        "Name": "출력",
+        "Tooltip": "출력 음량 설정, 조정, 음소거 또는 믹스 전환",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setvolumemonitor": {
+        "Name": "출력",
+        "Tooltip": "출력 음량 설정, 조정, 음소거 또는 믹스 전환",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.adjustvolumemonitor": {
+        "Name": "출력",
+        "Tooltip": "출력 음량 설정, 조정, 음소거 또는 믹스 전환",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.switchmonitoring": {
+        "Name": "출력",
+        "Tooltip": "출력 음량 설정, 조정, 음소거 또는 믹스 전환",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.hardwareaction": {
+        "Name": "기기",
+        "Tooltip": "Wave 기기 설정 제어 또는 오디오 출력 전환",
+        "States": [
+            {
+                "Name": "음소거"
+            },
+            {
+                "Name": "음소거 해제"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setmonitormixoutput": {
+        "Name": "기기",
+        "Tooltip": "Wave 기기 설정 제어 또는 오디오 출력 전환"
+    },
+    "com.elgato.wavelink.togglemonitormixoutput": {
+        "Name": "기기",
+        "Tooltip": "Wave 기기 설정 제어 또는 오디오 출력 전환"
+    },
+    "com.elgato.wavelink.setmicsettings": {
+        "Name": "기기",
+        "Tooltip": "Wave 기기 설정 제어 또는 오디오 출력 전환"
+    },
+    "com.elgato.wavelink.effectaction": {
+        "Name": "효과",
+        "Tooltip": "개별 효과 또는 전체 연쇄 효과 켬/끔",
+        "States": [
+            {
+                "Name": "켬"
+            },
+            {
+                "Name": "끔"
+            }
+        ]
+    },
+    "com.elgato.wavelink.seteffect": {
+        "Name": "효과",
+        "Tooltip": "개별 효과 또는 전체 연쇄 효과 켬/끔",
+        "States": [
+            {
+                "Name": "켬"
+            },
+            {
+                "Name": "끔"
+            }
+        ]
+    },
+    "com.elgato.wavelink.seteffectchain": {
+        "Name": "효과",
+        "Tooltip": "개별 효과 또는 전체 연쇄 효과 켬/끔",
+        "States": [
+            {
+                "Name": "켬"
+            },
+            {
+                "Name": "끔"
+            }
+        ]
+    },
+    "com.elgato.wavelink.switchprofiles": {
+        "Name": "프로필 전환",
+        "Tooltip": "프로필을 전환합니다"
+    },
+    "Localization": {
+        "PI": {
+            "msg_notice_toLaunchApp": "Wave Link를 실행하세요",
+            "msg_notice_toUpdateApp": "Wave Link를 최신 버전으로 업데이트하세요",
+            "msgComingSoonTM": "Wave Link에서 곧 제공 ",
+            "msgNoMicrophoneConnected": "하드웨어 설정은 연결된 Wave 기기에 대해서만 사용 가능합니다",
+            "micSettings": {
+                "label": "동작",
+                "none": "선택하십시오…",
+                "adjustGain": "게인 조정",
+                "setGain": "게인 설정",
+                "adjustOutput": "출력 볼륨 조절",
+                "setOutput": "출력 볼륨 설정",
+                "adjustMic/PcBalance": "마이크/PC 믹스 조정",
+                "setMic/PcBalance": "마이크/PC 믹스 설정",
+                "setLowcut": "노우컷 스위치",
+                "setClipguard": "클립가드 스위치",
+                "toggleGainLock": "게인값 잠금 스위치",
+                "toggleHardwareMute": "음소거 토글"
+            },
+            "setOutput": {
+                "label": "모니터 믹스"
+            },
+            "toggleOutput": {
+                "labelPrimary": "기본",
+                "labelSecondary": "보조"
+            },
+            "outputSelection": {
+                "label": "출력",
+                "local": "모니터 믹스",
+                "stream": "스트림 믹스",
+                "all": "모두"
+            },
+            "volumeSelection": {
+                "label": "단계 크기",
+                "mic": "마이크",
+                "pc": "PC"
+            },
+            "volumeRange": {
+                "setGain": "게인",
+                "setMicPC": "믹스",
+                "setVol": "음량",
+                "mic": "마이크",
+                "pc": "PC"
+            },
+            "effectActions": {
+                "toggleEffect": "효과 스위치",
+                "toggleEffectChain": "연쇄 효과 스위치"
+            },
+            "fadingSelection": {
+                "label": "페이딩",
+                "off": "끔",
+                "500ms": "0.5",
+                "1000ms": "1.0",
+                "1500ms": "1.5",
+                "2000ms": "2.0",
+                "2500ms": "2.5",
+                "3000ms": "3.0",
+                "unit": " 초"
+            },
+            "mixerSelection": {
+                "label": "입력"
+            },
+            "linkInputs": {
+                "label": "페이더 연결",
+                "on": "켬",
+                "off": "끔"
+            },
+            "switchProfile": {
+                "label": "다음으로 전환"
+            },
+            "filterSelection": {
+                "label": "효과",
+                "noFilterFound": "발견된 필터가 없습니다."
+            },
+            "actionStyle": {
+                "label": "아이콘 스타일",
+                "static": "고정",
+                "sliderHorizontal": "페이더 (수평)",
+                "sliderVertical": "페이더 (수직)",
+                "sliderAndLevelmeterHorizontal": "Fader + Level meter (horizontal)",
+                "sliderAndLevelmeterVertical": "Fader + Level meter (vertical)"
+            },
+            "actionSelection": {
+                "label": "종류",
+                "set": "설정",
+                "adjust": "조정",
+                "mute": "음소거",
+                "toggleOutputMonitoring": "출력 모니터링 스위치",
+                "setOutputDevice": "출력 장치 설정",
+                "toggleOutputDevice": "출력 장치 켬/끔",
+                "hardwareSettings": "하드웨어 설정"
+            },
+            "colored": {
+                "label": "컬러 아이콘"
+            }
+        },
+        "Actions": {
+            "mixerMute": {
+                "percentFirst": "",
+                "percentLast": " %"
+            },
+            "micSettingsTouch": { 
+                "adjustGain": "Gain",
+                "adjustOutput": "Output Volume",
+                "adjustMic/PcBalance":"Mic/PC Mix"
+            }
+        }
+    }
+}

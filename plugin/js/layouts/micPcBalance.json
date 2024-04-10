@@ -1,0 +1,32 @@
+{
+    "id" : "com.elgato.wavelink.micPcBalance",
+    "items" : [
+        {
+            "key" : "title",
+            "type" : "text",
+            "rect" : [16, 10, 136, 24],
+            "font" : { "size" : 16, "weight" : 600 },
+            "alignment" : "left"
+        },
+        {
+            "key" : "icon1",
+            "type" : "pixmap",
+            "rect" : [16, 50, 28, 28]
+        },
+        {
+            "key" : "icon2",
+            "type" : "pixmap",
+            "rect" : [156, 50, 28, 28]
+        },
+        {
+            "key" : "indicator",
+            "type" : "gbar",
+            "rect" : [50, 74, 100, 20],
+            "value" : 50,
+            "subtype" : 4,
+            "bar_h" : 12,
+            "border_w" : 0,
+            "bar_bg_c" : "0:#ffffff,1:#ffffff"
+        }
+    ]
+}

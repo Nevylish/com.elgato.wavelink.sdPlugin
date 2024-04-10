@@ -1,0 +1,298 @@
+{
+    "Name": "Wave Link",
+    "Category": "Wave Link",
+    "Description": "Contrôlez l’application de mixage audio Elgato Wave Link.",
+    "com.elgato.wavelink.inputaction": {
+        "Name": "Entrée",
+        "Tooltip": "Régler, ajuster ou couper le volume d'une entrée et d'un mixage",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ],
+        "Encoder": {
+            "TriggerDescription": {
+                "Rotate": "Régler le volume",
+                "Touch": "Couper/Réactiver le son"
+            }
+        }
+    },
+    "com.elgato.wavelink.mixermute": {
+        "Name": "Entrée",
+        "Tooltip": "Régler, ajuster ou couper le volume d'une entrée et d'un mixage",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setvolumemixer": {
+        "Name": "Entrée",
+        "Tooltip": "Régler, ajuster ou couper le volume d'une entrée et d'un mixage",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.adjustvolumemixer": {
+        "Name": "Entrée",
+        "Tooltip": "Régler, ajuster ou couper le volume d'une entrée et d'un mixage",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.outputaction": {
+        "Name": "Sortie",
+        "Tooltip": "Régler, ajuster et couper le volume de sortie, ou basculer entre différents mixages",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ],
+        "Encoder": {
+            "TriggerDescription": {
+                "Rotate": "Régler le volume",
+                "Touch": "Couper/Réactiver le son"
+            }
+        }
+    },
+    "com.elgato.wavelink.monitormute": {
+        "Name": "Sortie",
+        "Tooltip": "Régler, ajuster et couper le volume de sortie, ou basculer entre différents mixages",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setvolumemonitor": {
+        "Name": "Sortie",
+        "Tooltip": "Régler, ajuster et couper le volume de sortie, ou basculer entre différents mixages",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.adjustvolumemonitor": {
+        "Name": "Sortie",
+        "Tooltip": "Régler, ajuster et couper le volume de sortie, ou basculer entre différents mixages",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.switchmonitoring": {
+        "Name": "Sortie",
+        "Tooltip": "Régler, ajuster et couper le volume de sortie, ou basculer entre différents mixages",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.hardwareaction": {
+        "Name": "Appareil",
+        "Tooltip": "Contrôler les réglages d'un appareil Wave ou basculer entre différentes sorties audio",
+        "States": [
+            {
+                "Name": "Couper le son"
+            },
+            {
+                "Name": "Réactiver le son"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setmonitormixoutput": {
+        "Name": "Appareil",
+        "Tooltip": "Contrôler les réglages d'un appareil Wave ou basculer entre différentes sorties audio"
+    },
+    "com.elgato.wavelink.togglemonitormixoutput": {
+        "Name": "Appareil",
+        "Tooltip": "Contrôler les réglages d'un appareil Wave ou basculer entre différentes sorties audio"
+    },
+    "com.elgato.wavelink.setmicsettings": {
+        "Name": "Appareil",
+        "Tooltip": "Contrôler les réglages d'un appareil Wave ou basculer entre différentes sorties audio"
+    },
+    "com.elgato.wavelink.effectaction": {
+        "Name": "Effets",
+        "Tooltip": "Activer/Désactiver des effets individuels ou toute une chaîne d'effets",
+        "States": [
+            {
+                "Name": "Activer"
+            },
+            {
+                "Name": "Désactiver"
+            }
+        ]
+    },
+    "com.elgato.wavelink.seteffect": {
+        "Name": "Effets",
+        "Tooltip": "Activer/Désactiver des effets individuels ou toute une chaîne d'effets",
+        "States": [
+            {
+                "Name": "Activer"
+            },
+            {
+                "Name": "Désactiver"
+            }
+        ]
+    },
+    "com.elgato.wavelink.seteffectchain": {
+        "Name": "Effets",
+        "Tooltip": "Activer/Désactiver des effets individuels ou toute une chaîne d'effets",
+        "States": [
+            {
+                "Name": "Activer"
+            },
+            {
+                "Name": "Désactiver"
+            }
+        ]
+    },
+    "com.elgato.wavelink.switchprofiles": {
+        "Name": "Changer de profil",
+        "Tooltip": "Changer de profil"
+    },
+    "Localization": {
+        "PI": {
+            "msg_notice_toLaunchApp": "Veuillez ouvrir Wave Link",
+            "msg_notice_toUpdateApp": "Veuillez installer une version plus récente de Wave Link",
+            "msgComingSoonTM": "Bientôt disponible avec Wave Link ",
+            "msgNoMicrophoneConnected": "Les réglages matériels ne sont disponibles que lorsqu'un appareil Wave est connecté",
+            "micSettings": {
+                "label": "Action",
+                "none": "Veuillez sélectionner…",
+                "adjustGain": "Régler le gain",
+                "setGain": "Définir le gain",
+                "adjustOutput": "Régler le volume de sortie",
+                "setOutput": "Définir le volume de sortie",
+                "adjustMic/PcBalance": "Régler le mixage Micro/PC",
+                "setMic/PcBalance": "Définir le mixage micro/PC",
+                "setLowcut": "Activer/Désactiver le filtre coupe-bas",
+                "setClipguard": "Activer/Désactiver la fonction Clipguard",
+                "toggleGainLock": "Activer/Désactiver le verrouillage du gain",
+                "toggleHardwareMute": "Couper/Réactiver le son"
+            },
+            "setOutput": {
+                "label": "Mixage de monitoring"
+            },
+            "toggleOutput": {
+                "labelPrimary": "Principal",
+                "labelSecondary": "Secondaire"
+            },
+            "outputSelection": {
+                "label": "Sortie",
+                "local": "Mixage de monitoring",
+                "stream": "Mixage de streaming",
+                "all": "Tout"
+            },
+            "volumeSelection": {
+                "label": "Taille des pas",
+                "mic": "Micro",
+                "pc": "PC"
+            },
+            "volumeRange": {
+                "setGain": "Gain",
+                "setMicPC": "Mixage",
+                "setVol": "Volume",
+                "mic": "Micro",
+                "pc": "PC"
+            },
+            "effectActions": {
+                "toggleEffect": "Activer/Désactiver l’effet",
+                "toggleEffectChain": "Activer/Désactiver la chaîne d’effets"
+            },
+            "fadingSelection": {
+                "label": "Fondu",
+                "off": "Désactiver",
+                "500ms": "0,5",
+                "1000ms": "1",
+                "1500ms": "1,5",
+                "2000ms": "2",
+                "2500ms": "2,5",
+                "3000ms": "3",
+                "unit": " s"
+            },
+            "mixerSelection": {
+                "label": "Entrée"
+            },
+            "linkInputs": {
+                "label": "Associer les faders",
+                "on": "Activer",
+                "off": "Désactiver"
+            },
+            "switchProfile": {
+                "label": "Passer à"
+            },
+            "filterSelection": {
+                "label": "Effet",
+                "noFilterFound": "Aucun filtre trouvé."
+            },
+            "actionStyle": {
+                "label": "Style d'icône",
+                "static": "Statique",
+                "sliderHorizontal": "Fader (horizontal)",
+                "sliderVertical": "Fader (vertical)",
+                "sliderAndLevelmeterHorizontal": "Fader + Level meter (horizontal)",
+                "sliderAndLevelmeterVertical": "Fader + Level meter (vertical)"
+            },
+            "actionSelection": {
+                "label": "Type",
+                "set": "Définir",
+                "adjust": "Ajuster",
+                "mute": "Couper le son",
+                "toggleOutputMonitoring": "Activer/Désactiver le monitoring de sortie",
+                "setOutputDevice": "Définir le périphérique de sortie",
+                "toggleOutputDevice": "Activer/Désactiver le périphérique de sortie",
+                "hardwareSettings": "Paramètres matériels"
+            },
+            "colored": {
+                "label": "Icône colorée"
+            }
+        },
+        "Actions": {
+            "mixerMute": {
+                "percentFirst": "",
+                "percentLast": " %"
+            },
+            "micSettingsTouch": { 
+                "adjustGain": "Gain",
+                "adjustOutput": "Output Volume",
+                "adjustMic/PcBalance":"Mic/PC Mix"
+            }
+        }
+    }
+}

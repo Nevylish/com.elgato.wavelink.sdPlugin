@@ -1,0 +1,298 @@
+{
+    "Name": "Wave Link",
+    "Category": "Wave Link",
+    "Description": "Elgato Wave Linkのオーディオミキシングアプリケーションをコントロールします。",
+    "com.elgato.wavelink.inputaction": {
+        "Name": "入力",
+        "Tooltip": "入力とミックスの音量を設定、調整、または消音",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ],
+        "Encoder": {
+            "TriggerDescription": {
+                "Rotate": "音量を調整",
+                "Touch": "消音/消音解除"
+            }
+        }
+    },
+    "com.elgato.wavelink.mixermute": {
+        "Name": "入力",
+        "Tooltip": "入力とミックスの音量を設定、調整、または消音",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setvolumemixer": {
+        "Name": "入力",
+        "Tooltip": "入力とミックスの音量を設定、調整、または消音",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.adjustvolumemixer": {
+        "Name": "入力",
+        "Tooltip": "入力とミックスの音量を設定、調整、または消音",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.outputaction": {
+        "Name": "出力",
+        "Tooltip": "出力の音量を設定、調整、および消音、またはミックス間を切り替え",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ],
+        "Encoder": {
+            "TriggerDescription": {
+                "Rotate": "音量を調整",
+                "Touch": "消音/消音解除"
+            }
+        }
+    },
+    "com.elgato.wavelink.monitormute": {
+        "Name": "出力",
+        "Tooltip": "出力の音量を設定、調整、および消音、またはミックス間を切り替え",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setvolumemonitor": {
+        "Name": "出力",
+        "Tooltip": "出力の音量を設定、調整、および消音、またはミックス間を切り替え",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.adjustvolumemonitor": {
+        "Name": "出力",
+        "Tooltip": "出力の音量を設定、調整、および消音、またはミックス間を切り替え",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.switchmonitoring": {
+        "Name": "出力",
+        "Tooltip": "出力の音量を設定、調整、および消音、またはミックス間を切り替え",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.hardwareaction": {
+        "Name": "デバイス",
+        "Tooltip": "Waveデバイスの設定をコントロール、または異なるオーディオ出力間を切り替え",
+        "States": [
+            {
+                "Name": "消音"
+            },
+            {
+                "Name": "消音解除"
+            }
+        ]
+    },
+    "com.elgato.wavelink.setmonitormixoutput": {
+        "Name": "デバイス",
+        "Tooltip": "Waveデバイスの設定をコントロール、または異なるオーディオ出力間を切り替え"
+    },
+    "com.elgato.wavelink.togglemonitormixoutput": {
+        "Name": "デバイス",
+        "Tooltip": "Waveデバイスの設定をコントロール、または異なるオーディオ出力間を切り替え"
+    },
+    "com.elgato.wavelink.setmicsettings": {
+        "Name": "デバイス",
+        "Tooltip": "Waveデバイスの設定をコントロール、または異なるオーディオ出力間を切り替え"
+    },
+    "com.elgato.wavelink.effectaction": {
+        "Name": "エフェクト",
+        "Tooltip": "個々のエフェクトまたはエフェクトチェーン全体を切り替え",
+        "States": [
+            {
+                "Name": "オン"
+            },
+            {
+                "Name": "オフ"
+            }
+        ]
+    },
+    "com.elgato.wavelink.seteffect": {
+        "Name": "エフェクト",
+        "Tooltip": "個々のエフェクトまたはエフェクトチェーン全体を切り替え",
+        "States": [
+            {
+                "Name": "オン"
+            },
+            {
+                "Name": "オフ"
+            }
+        ]
+    },
+    "com.elgato.wavelink.seteffectchain": {
+        "Name": "エフェクト",
+        "Tooltip": "個々のエフェクトまたはエフェクトチェーン全体を切り替え",
+        "States": [
+            {
+                "Name": "オン"
+            },
+            {
+                "Name": "オフ"
+            }
+        ]
+    },
+    "com.elgato.wavelink.switchprofiles": {
+        "Name": "プロファイルを切り替え",
+        "Tooltip": "プロファイルを切り替え"
+    },
+    "Localization": {
+        "PI": {
+            "msg_notice_toLaunchApp": "Wave Linkを起動してください",
+            "msg_notice_toUpdateApp": "Wave Linkを最新バージョンにアップデートしてください",
+            "msgComingSoonTM": "まもなくWave Linkに登場",
+            "msgNoMicrophoneConnected": "ハードウェア設定はWaveデバイスが接続されている場合のみ利用できます",
+            "micSettings": {
+                "label": "アクション",
+                "none": "選択してください…",
+                "adjustGain": "ゲインを調整",
+                "setGain": "ゲインを設定",
+                "adjustOutput": "出力音量を調整",
+                "setOutput": "出力音量を設定",
+                "adjustMic/PcBalance": "マイク/PCミックスを調整",
+                "setMic/PcBalance": "マイク/PCミックスを設定",
+                "setLowcut": "ローカットを切り替え",
+                "setClipguard": "Clipguardを切り替え",
+                "toggleGainLock": "ゲインのロックを切り替え",
+                "toggleHardwareMute": "消音を切り替え"
+            },
+            "setOutput": {
+                "label": "モニターミックス"
+            },
+            "toggleOutput": {
+                "labelPrimary": "プライマリ",
+                "labelSecondary": "セカンダリー"
+            },
+            "outputSelection": {
+                "label": "出力",
+                "local": "モニターミックス",
+                "stream": "ストリームミックス",
+                "all": "すべて"
+            },
+            "volumeSelection": {
+                "label": "ステップのサイズ",
+                "mic": "マイク",
+                "pc": "PC"
+            },
+            "volumeRange": {
+                "setGain": "ゲイン",
+                "setMicPC": "ミックス",
+                "setVol": "音量",
+                "mic": "マイク",
+                "pc": "PC"
+            },
+            "effectActions": {
+                "toggleEffect": "エフェクトを切り替え",
+                "toggleEffectChain": "エフェクトのチェーンを切り替え"
+            },
+            "fadingSelection": {
+                "label": "フェード",
+                "off": "オフ",
+                "500ms": "0.5",
+                "1000ms": "1.0",
+                "1500ms": "1.5",
+                "2000ms": "2.0",
+                "2500ms": "2.5",
+                "3000ms": "3.0",
+                "unit": " 秒"
+            },
+            "mixerSelection": {
+                "label": "入力"
+            },
+            "linkInputs": {
+                "label": "フェーダーをリンク",
+                "on": "オン",
+                "off": "オフ"
+            },
+            "switchProfile": {
+                "label": "切り替え先"
+            },
+            "filterSelection": {
+                "label": "エフェクト",
+                "noFilterFound": "フィルタが見つかりません。"
+            },
+            "actionStyle": {
+                "label": "アイコンのスタイル",
+                "static": "静的",
+                "sliderHorizontal": "フェーダー (横向き)",
+                "sliderVertical": "フェーダー (縦向き)",
+                "sliderAndLevelmeterHorizontal": "Fader + Level meter (horizontal)",
+                "sliderAndLevelmeterVertical": "Fader + Level meter (vertical)"
+            },
+            "actionSelection": {
+                "label": "タイプ",
+                "set": "設定",
+                "adjust": "調整",
+                "mute": "消音",
+                "toggleOutputMonitoring": "出力モニタリングを切り替え",
+                "setOutputDevice": "出力デバイスを設定",
+                "toggleOutputDevice": "出力デバイスを切り替え",
+                "hardwareSettings": "ハードウェア設定"
+            },
+            "colored": {
+                "label": "色付きアイコン"
+            }
+        },
+        "Actions": {
+            "mixerMute": {
+                "percentFirst": "",
+                "percentLast": " %"
+            },
+            "micSettingsTouch": { 
+                "adjustGain": "Gain",
+                "adjustOutput": "Output Volume",
+                "adjustMic/PcBalance":"Mic/PC Mix"
+            }
+        }
+    }
+}

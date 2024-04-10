@@ -1,14 +1,14 @@
 {
     "SDKVersion": 2,
-    "Author": "Elgato",
+    "Author": "Elgato, enhanced by Nevylish",
     "CodePath": "index.html",
     "PropertyInspectorPath": "pi/index.html",
     "Description": "Control the Elgato Wave Link audio mixing application.",
     "Category": "Wave Link",
     "CategoryIcon": "images/sidebar/waveLink",
-    "Name": "Wave Link",
+    "Name": "Wave Link (Colored version)",
     "Icon": "images/sidebar/waveLink_appIcon_store",
-    "URL": "https://elgato.com/wave-3",
+    "URL": "https://nevylish.ch/twitter",
     "Version": "2.1.1.5",
     "OS": [
         {

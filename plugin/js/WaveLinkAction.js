@@ -458,8 +458,8 @@ class WaveLinkAction extends Action {
                                         <rect id="bar" x="${radius * 11}" rx="${radius}" width="${radius*2}" height="${faderWidth - h}" fill="${options.bgColor}"></rect>
                                     </g>
                                     <g transform="translate(${-faderOffset} ${-thumbWidth + height * faderWidth})">
-                                        <circle id="cut" cx="72" cy="74" r="26" fill="${options.bgColor}" mask="url(#mask-2)"/>
-                                        <path id="ring" fill="#000" d="M72,54 C83.045695,54 92,62.954305 92,74 C92,85.045695 83.045695,94 72,94 C60.954305,94 52,85.045695 52,74 C52,62.954305 60.954305,54 72,54 Z M72,60 C64.2680135,60 58,66.2680135 58,74 C58,81.7319865 64.2680135,88 72,88 C79.7319865,88 86,81.7319865 86,74 C86,66.2680135 79.7319865,60 72,60 Z"/>
+                                        <circle id="cut" cx="72" cy="74" r="26" fill="#000" mask="url(#mask-2)"/>
+                                        <path id="ring" fill="${options.bgColor}" d="M72,54 C83.045695,54 92,62.954305 92,74 C92,85.045695 83.045695,94 72,94 C60.954305,94 52,85.045695 52,74 C52,62.954305 60.954305,54 72,54 Z M72,60 C64.2680135,60 58,66.2680135 58,74 C58,81.7319865 64.2680135,88 72,88 C79.7319865,88 86,81.7319865 86,74 C86,66.2680135 79.7319865,60 72,60 Z"/>
                                     </g>
                                 </g>
                             </svg>`;

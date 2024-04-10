@@ -8,6 +8,6 @@
 #
 
 TODO: 
- - Changement automatique des couleurs des icônes selon celles de Wave Link (pour les bidouilleurs ultimes)
+ - Changement automatique des couleurs des icônes (pas les faders c'est déjà le cas mais les svg dans /images/key/inputActions ex: musicMonitor.svg) selon celles de Wave Link (pour les bidouilleurs ultimes)
  - Corriger les erreurs lorsque les icônes colorées sont désactivées 
  - Options pour mélanger le level meter avec le fader (un truc stylé promis)

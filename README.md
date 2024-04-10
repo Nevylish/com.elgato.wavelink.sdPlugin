@@ -4,3 +4,10 @@
 
 ### After:
 ![After](https://cdn.discordapp.com/attachments/1227619225787433052/1227692831150313543/image.png?ex=6629550c&is=6616e00c&hm=d32dc2b5b08ce36e7ac9ca32668f4e282644bb3311d7792c00bc426ebf1015d9&)
+
+#
+
+TODO: 
+ - Changement automatique des couleurs des icônes selon celles de Wave Link (pour les bidouilleurs ultimes)
+ - Corriger les erreurs lorsque les icônes colorées sont désactivées 
+ - Options pour mélanger le level meter avec le fader (un truc stylé promis)

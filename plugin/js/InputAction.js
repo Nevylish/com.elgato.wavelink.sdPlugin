@@ -566,9 +566,9 @@ class InputAction extends WaveLinkAction {
                         const muteIndicatorOverlay = settings.mixerID != kPropertyMixerIDAll ? 'muteIndicator' : '';
 
                         svgIcon.layerOrder = ['fill', useIconData, 'text', `${mixerOverlay}` ];
-                        svgIcon2.layerOrder = [ 'fill', useIconData, 'text', settings.mixerID == kPropertyMixerIDAll ? 'mute' : 'overlayMuteMonitorStream', `${mixerOverlay}`, `${muteIndicatorOverlay}` ];
+                        svgIcon2.layerOrder = ['fill', useIconData, 'text', settings.mixerID == kPropertyMixerIDAll ? 'mute' : 'overlayMuteMonitorStream', `${mixerOverlay}`, `${muteIndicatorOverlay}` ];
                     } else if (settings.actionType == ActionType.SetVolume) {
-                        svgIcon.layerOrder = [ 'fill', useIconData, 'overlaySet' ];
+                        svgIcon.layerOrder = ['fill', useIconData, 'overlaySet' ];
                     }
                     
                     svgIcon.backgroundColor = settings.isColored && this.wlc.UP_WINDOWS ? input?.bgColor : '';

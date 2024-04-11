@@ -2,14 +2,14 @@
 
 class HardwareAction extends WaveLinkAction {
 
-	feedbackBlocked = new Map();
+    feedbackBlocked = new Map();
 
-    constructor(uuid) { 
+    constructor(uuid) {
 
         super(uuid);
-        
-        this.onKeyDown(async ({ context, payload }) => {
-            const { settings } = payload;
+
+        this.onKeyDown(async ({context, payload}) => {
+            const {settings} = payload;
 
             try {
                 switch (settings.actionType) {
@@ -41,10 +41,10 @@ class HardwareAction extends WaveLinkAction {
                                 break;
                             case kPropertySetMicPcBalance:
                                 this.wlc.setMicrophoneConfig(context, kJSONPropertyBalance, settings.volValue);
-                                break; 
+                                break;
                             case kPropertyAdjustMicPcBalance:
                                 this.adjustValue(context, kJSONPropertyBalance, settings.volValue);
-                                break;  
+                                break;
 
                             default:
                                 break;
@@ -52,15 +52,15 @@ class HardwareAction extends WaveLinkAction {
                         break;
                     default:
                         break;
-                }     
+                }
             } catch (error) {
                 debug("SetMicrophone", error)
                 $SD.showAlert(context);
             }
         });
 
-        this.onKeyUp(async ({ context, payload }) => {
-            const { settings } = payload;
+        this.onKeyUp(async ({context, payload}) => {
+            const {settings} = payload;
 
             try {
                 switch (settings.actionType) {
@@ -84,9 +84,9 @@ class HardwareAction extends WaveLinkAction {
 
                         switch (settings.micSettingsAction) {
                             case kPropertyToggleLowcut:
-                                const isWaveXLR         = microphone?.isWaveXLR;
-                                const newLowcutState    = isWaveXLR ? this.getNextLowcutType() : !microphone?.isLowCutOn;
-                                const property          = isWaveXLR ? kPropertyMicrophoneLowCutType : kPropertyMicrophoneLowCut;
+                                const isWaveXLR = microphone?.isWaveXLR;
+                                const newLowcutState = isWaveXLR ? this.getNextLowcutType() : !microphone?.isLowCutOn;
+                                const property = isWaveXLR ? kPropertyMicrophoneLowCutType : kPropertyMicrophoneLowCut;
 
                                 this.wlc.setMicrophoneConfig(context, property, newLowcutState);
                                 break;
@@ -111,12 +111,12 @@ class HardwareAction extends WaveLinkAction {
                 $SD.showAlert(context);
             }
 
-			this.setState(context);
+            this.setState(context);
         });
 
-        this.onDialRotate(({ context, payload }) => {
-            const { settings } = payload;
-            const { ticks } = payload;
+        this.onDialRotate(({context, payload}) => {
+            const {settings} = payload;
+            const {ticks} = payload;
 
             const deviceSetting = settings.micSettingsAction;
             const microphone = this.wlc.getMicrophone();
@@ -145,25 +145,37 @@ class HardwareAction extends WaveLinkAction {
                     const newValue = ticks * settings.volValue + currentValue;
                     this.wlc.setMicrophoneConfig(context, property, newValue == undefined ? 1 : newValue);
 
-					if (this.feedbackBlocked.get(deviceSetting)) {
-						clearTimeout(this.feedbackBlocked.get(deviceSetting));
-						this.feedbackBlocked.delete(deviceSetting);
-						this.feedbackBlocked.set(deviceSetting, setTimeout(() => { this.feedbackBlocked.delete(deviceSetting); }, 100));
-					} else {
-						this.feedbackBlocked.set(deviceSetting, setTimeout(() => { this.feedbackBlocked.delete(deviceSetting); }, 100));    
-					}
-	
-					if (this.feedbackBlocked.get(context)) {
-						clearTimeout(this.feedbackBlocked.get(context));
-						this.feedbackBlocked.delete(context);
-	
-						this.feedbackBlocked.set(context, setTimeout(() => { this.feedbackBlocked.delete(context); this.setFeedbackLayout(context); this.setFeedback(context); }, 2000));
-					} else {
-						this.feedbackBlocked.set(context, setTimeout(() => { this.feedbackBlocked.delete(context); this.setFeedbackLayout(context); this.setFeedback(context); }, 2000));
-	
-						this.setFeedbackLayout(context);
-						this.setFeedback(context);
-					}
+                    if (this.feedbackBlocked.get(deviceSetting)) {
+                        clearTimeout(this.feedbackBlocked.get(deviceSetting));
+                        this.feedbackBlocked.delete(deviceSetting);
+                        this.feedbackBlocked.set(deviceSetting, setTimeout(() => {
+                            this.feedbackBlocked.delete(deviceSetting);
+                        }, 100));
+                    } else {
+                        this.feedbackBlocked.set(deviceSetting, setTimeout(() => {
+                            this.feedbackBlocked.delete(deviceSetting);
+                        }, 100));
+                    }
+
+                    if (this.feedbackBlocked.get(context)) {
+                        clearTimeout(this.feedbackBlocked.get(context));
+                        this.feedbackBlocked.delete(context);
+
+                        this.feedbackBlocked.set(context, setTimeout(() => {
+                            this.feedbackBlocked.delete(context);
+                            this.setFeedbackLayout(context);
+                            this.setFeedback(context);
+                        }, 2000));
+                    } else {
+                        this.feedbackBlocked.set(context, setTimeout(() => {
+                            this.feedbackBlocked.delete(context);
+                            this.setFeedbackLayout(context);
+                            this.setFeedback(context);
+                        }, 2000));
+
+                        this.setFeedbackLayout(context);
+                        this.setFeedback(context);
+                    }
 
 
                     this.throttleUpdate(context, 100, () => this.setFeedbackVolume(context));
@@ -174,14 +186,14 @@ class HardwareAction extends WaveLinkAction {
             }
         });
 
-        this.onDialUp(({ context, payload }) => {
-            const { pressed } = payload;
+        this.onDialUp(({context, payload}) => {
+            const {pressed} = payload;
 
             if (!pressed)
                 this.muteHardware(context);
         });
 
-        this.onTouchTap(({ context }) => {
+        this.onTouchTap(({context}) => {
             this.muteHardware(context);
         });
 
@@ -198,19 +210,19 @@ class HardwareAction extends WaveLinkAction {
             });
         });
 
-		this.wlc.onEvent(kJSONPropertyInputLevelChanged, (payload) => {
-			this.actions.forEach((action, actionContext) => {
-				const { settings } = action;
+        this.wlc.onEvent(kJSONPropertyInputLevelChanged, (payload) => {
+            this.actions.forEach((action, actionContext) => {
+                const {settings} = action;
 
-				if (this.useLevelmeter(actionContext) && settings.micSettingsAction == kPropertyAdjustGain) {
-					if (action.isEncoder)
-						this.setFeedback(actionContext);
-					else if (!this.feedbackBlocked.get(kJSONPropertyGain)) {
-						this.setKeyIcons(actionContext, kJSONPropertyInputLevelChanged);
-					}
-				}
-			});
-		});
+                if (this.useLevelmeter(actionContext) && settings.micSettingsAction == kPropertyAdjustGain) {
+                    if (action.isEncoder)
+                        this.setFeedback(actionContext);
+                    else if (!this.feedbackBlocked.get(kJSONPropertyGain)) {
+                        this.setKeyIcons(actionContext, kJSONPropertyInputLevelChanged);
+                    }
+                }
+            });
+        });
 
         this.wlc.onEvent(kJSONPropertySelectedOutputChanged, () => {
             this.actions.forEach((action, actionContext) => {
@@ -223,25 +235,25 @@ class HardwareAction extends WaveLinkAction {
             });
         });
 
-		this.wlc.onEvent(kJSONPropertyOutputLevelChanged, (payload) => {
-			this.actions.forEach((action, actionContext) => {
-				const { settings } = action;
+        this.wlc.onEvent(kJSONPropertyOutputLevelChanged, (payload) => {
+            this.actions.forEach((action, actionContext) => {
+                const {settings} = action;
 
-				if (this.useLevelmeter(actionContext) && settings.micSettingsAction == kPropertyAdjustOutput) {
-					if (action.isEncoder)
-						this.setFeedback(actionContext);
-					else if (!this.feedbackBlocked.get(kJSONPropertyOutputVolume)) {
-						this.setKeyIcons(actionContext, kJSONPropertyOutputLevelChanged);
-					}
-				}
-			});
-		});
+                if (this.useLevelmeter(actionContext) && settings.micSettingsAction == kPropertyAdjustOutput) {
+                    if (action.isEncoder)
+                        this.setFeedback(actionContext);
+                    else if (!this.feedbackBlocked.get(kJSONPropertyOutputVolume)) {
+                        this.setKeyIcons(actionContext, kJSONPropertyOutputLevelChanged);
+                    }
+                }
+            });
+        });
 
         this.wlc.onEvent(kJSONPropertyMicrophoneConfigChanged, (payload) => {
             this.actions.forEach((action, actionContext) => {
                 const settings = action.settings;
-                const { property } = payload;
-                const { context } = payload;
+                const {property} = payload;
+                const {context} = payload;
 
                 if (actionContext != context || property == kPropertyMicrophoneMute) {
                     if (action.isEncoder && this.isActionUpdateNeeded(property, settings.micSettingsAction)) {
@@ -271,82 +283,82 @@ class HardwareAction extends WaveLinkAction {
 
                 var indicatorValue = 0, levelLeft = 0, levelRight = 0;
 
-				if (microphone != undefined) {
-					switch (deviceSetting) {
-						case kPropertyAdjustGain:
-							const [firstKey] = this.wlc.microphones.keys();
-							const input = this.wlc.inputs.find((input, index) => input.identifier.includes(firstKey));
+                if (microphone != undefined) {
+                    switch (deviceSetting) {
+                        case kPropertyAdjustGain:
+                            const [firstKey] = this.wlc.microphones.keys();
+                            const input = this.wlc.inputs.find((input, index) => input.identifier.includes(firstKey));
 
-							levelLeft = input?.levelLeft || 0;
-							levelRight = input?.levelRight || 0;
+                            levelLeft = input?.levelLeft || 0;
+                            levelRight = input?.levelRight || 0;
 
-							indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.gainIndex) * 100;
-							break;
-						case kPropertyAdjustOutput:
-							const output = this.wlc.getOutput();
+                            indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.gainIndex) * 100;
+                            break;
+                        case kPropertyAdjustOutput:
+                            const output = this.wlc.getOutput();
 
-							levelLeft = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelLeft : output?.stream.levelLeft;
-							levelRight = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelRight : output?.stream.levelRight;
+                            levelLeft = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelLeft : output?.stream.levelLeft;
+                            levelRight = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelRight : output?.stream.levelRight;
 
-							indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.outputVolumeIndex) * 100;
-							break;
-						case kPropertyAdjustMicPcBalance:
-							indicatorValue = microphone.balanceIndex;
-							break;
-						default:
-							return;
-					}
-				}
+                            indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.outputVolumeIndex) * 100;
+                            break;
+                        case kPropertyAdjustMicPcBalance:
+                            indicatorValue = microphone.balanceIndex;
+                            break;
+                        default:
+                            return;
+                    }
+                }
 
-				const options = {
-					bgColor: '',
-					value: parseInt(100 - indicatorValue),
-					levelLeft: levelLeft,
-					levelRight : levelRight,
-					isTop: settings.volValue >= 0 ? true : false,
-					orientation: settings.actionStyle  
-				}
+                const options = {
+                    bgColor: '',
+                    value: parseInt(100 - indicatorValue),
+                    levelLeft: levelLeft,
+                    levelRight: levelRight,
+                    isTop: settings.volValue >= 0 ? true : false,
+                    orientation: settings.actionStyle
+                }
 
                 if (options.value == undefined || options.value == NaN) {
                     console.error("No valid property value");
                     return;
                 }
 
-				switch (settings.actionStyle) {
-					case 1:
-					case 2:
-						$SD.setImage(context, this.getBase64FaderSVG(context, options));
-						break;
-					case 3:
-					case 4:
-						if (this.checkIfKeyIconUpdateIsNeeded(context, settings.actionStyle, deviceSetting, options, notificationType)) {
-							this.throttleUpdate(context, 50, () => {
-								switch (deviceSetting) {
-									case kPropertyAdjustGain:
-										const [firstKey] = this.wlc.microphones.keys();
-										const input = this.wlc.inputs.find((input, index) => input.identifier.includes(firstKey));
+                switch (settings.actionStyle) {
+                    case 1:
+                    case 2:
+                        $SD.setImage(context, this.getBase64FaderSVG(context, options));
+                        break;
+                    case 3:
+                    case 4:
+                        if (this.checkIfKeyIconUpdateIsNeeded(context, settings.actionStyle, deviceSetting, options, notificationType)) {
+                            this.throttleUpdate(context, 50, () => {
+                                switch (deviceSetting) {
+                                    case kPropertyAdjustGain:
+                                        const [firstKey] = this.wlc.microphones.keys();
+                                        const input = this.wlc.inputs.find((input, index) => input.identifier.includes(firstKey));
 
-										options.levelLeft = input?.levelLeft || 0;
-										options.levelRight = input?.levelRight || 0;
-										break;
-									case kPropertyAdjustOutput:
-										const output = this.wlc.getOutput();
-			
-										options.levelLeft = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelLeft : output?.stream.levelLeft;
-										options.levelRight = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelRight : output?.stream.levelRight;
-										break;
-									default:
-										break;
-								}
-								$SD.setImage(context, this.getBase64FaderAndLevelmeterSVG(context, options));
-							});
-						}
-						break;
-					default:
-						break;
-					}
+                                        options.levelLeft = input?.levelLeft || 0;
+                                        options.levelRight = input?.levelRight || 0;
+                                        break;
+                                    case kPropertyAdjustOutput:
+                                        const output = this.wlc.getOutput();
+
+                                        options.levelLeft = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelLeft : output?.stream.levelLeft;
+                                        options.levelRight = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelRight : output?.stream.levelRight;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                $SD.setImage(context, this.getBase64FaderAndLevelmeterSVG(context, options));
+                            });
+                        }
+                        break;
+                    default:
+                        break;
+                }
             } else {
-                var icon  = 'default';
+                var icon = 'default';
                 var icon2 = icon;
 
                 switch (settings.actionType) {
@@ -359,30 +371,30 @@ class HardwareAction extends WaveLinkAction {
                         break;
                     case ActionType.SetDeviceSettings:
                         //if (this.wlc.getMicrophone()) {
-                            switch (deviceSetting) {
-                                case kPropertySetGain:
-                                case kPropertySetOutput:
-                                case kPropertySetMicPcBalance:
-                                    icon = icon2 = deviceSetting;
-                                    break;
-                                case kPropertyAdjustGain:
-                                case kPropertyAdjustOutput:
-                                case kPropertyAdjustMicPcBalance:
-                                    if (isEncoder)
-                                        icon = icon2 = deviceSetting + (this.wlc.getMicrophone()?.isMicMuted ? kPropertySuffixMuted : '');
-                                    else
-                                        icon = icon2 = (settings.volValue > 0) ? deviceSetting + kPropertySuffixPlus : deviceSetting + kPropertySuffixMinus;
-                                    break;
-                                case kPropertytoggleGainLock:
-                                case kPropertyToggleLowcut:
-                                case kPropertyToggleClipguard:
-                                case kPropertyToggleHardwareMute:
-                                    icon = deviceSetting + kPropertySuffixOn;
-                                    icon2 = deviceSetting + kPropertySuffixOff;
-                                    break;
-                                default:
-                                    return;
-                            }
+                        switch (deviceSetting) {
+                            case kPropertySetGain:
+                            case kPropertySetOutput:
+                            case kPropertySetMicPcBalance:
+                                icon = icon2 = deviceSetting;
+                                break;
+                            case kPropertyAdjustGain:
+                            case kPropertyAdjustOutput:
+                            case kPropertyAdjustMicPcBalance:
+                                if (isEncoder)
+                                    icon = icon2 = deviceSetting + (this.wlc.getMicrophone()?.isMicMuted ? kPropertySuffixMuted : '');
+                                else
+                                    icon = icon2 = (settings.volValue > 0) ? deviceSetting + kPropertySuffixPlus : deviceSetting + kPropertySuffixMinus;
+                                break;
+                            case kPropertytoggleGainLock:
+                            case kPropertyToggleLowcut:
+                            case kPropertyToggleClipguard:
+                            case kPropertyToggleHardwareMute:
+                                icon = deviceSetting + kPropertySuffixOn;
+                                icon2 = deviceSetting + kPropertySuffixOff;
+                                break;
+                            default:
+                                return;
+                        }
                         //}
                         break;
                     default:
@@ -391,8 +403,8 @@ class HardwareAction extends WaveLinkAction {
 
                 if (!icon2)
                     icon2 = icon;
-                
-                const svgIcon = this.awl.keyIconsHardware[icon]; 
+
+                const svgIcon = this.awl.keyIconsHardware[icon];
                 const svgIcon2 = this.awl.keyIconsHardware[icon2];
 
                 if (icon != icon2) {
@@ -411,31 +423,31 @@ class HardwareAction extends WaveLinkAction {
 
     setFeedbackVolume(context) {
         const payload = this.createFeedbackPayload(context, false, false, true, true);
-        $SD.send(context, "setFeedback", { payload });
+        $SD.send(context, "setFeedback", {payload});
     }
 
     setFeedback(context) {
         const payload = this.createFeedbackPayload(context, true, true, true, true);
-        $SD.send(context, "setFeedback", { payload });
+        $SD.send(context, "setFeedback", {payload});
     }
 
-	setFeedbackLayout(context) {
-		const payload = { layout: '$B1' };
+    setFeedbackLayout(context) {
+        const payload = {layout: '$B1'};
 
-		switch (this.actions.get(context).settings.micSettingsAction) {
-			case kPropertyAdjustGain:
-			case kPropertyAdjustOutput:
-				payload.layout = this.useLevelmeter(context) ? 'plugin/js/layouts/levelmeterSplitted.json' : '$B1';
-				break;
-			case kPropertyAdjustMicPcBalance:
-				payload.layout = 'plugin/js/layouts/micPcBalance.json';
-				break;
-			default:
-				break;
-		}
+        switch (this.actions.get(context).settings.micSettingsAction) {
+            case kPropertyAdjustGain:
+            case kPropertyAdjustOutput:
+                payload.layout = this.useLevelmeter(context) ? 'plugin/js/layouts/levelmeterSplitted.json' : '$B1';
+                break;
+            case kPropertyAdjustMicPcBalance:
+                payload.layout = 'plugin/js/layouts/micPcBalance.json';
+                break;
+            default:
+                break;
+        }
 
-		$SD.send(context, "setFeedbackLayout", { payload });
-	}
+        $SD.send(context, "setFeedbackLayout", {payload});
+    }
 
     setState(context) {
         const settings = this.actions.get(context).settings;
@@ -474,7 +486,7 @@ class HardwareAction extends WaveLinkAction {
                         state = ~~microphone.isMicMuted;
                         break;
                     default:
-						state = 0;
+                        state = 0;
                         break;
                 }
                 $SD.setState(context, state);
@@ -504,11 +516,14 @@ class HardwareAction extends WaveLinkAction {
         }
 
         this.wlc.setMicrophoneConfig(context, property, value + currentValue);
-   
+
         // Only for slider keys: Update key icon and notify buddy key
         if (settings.actionStyle != 0) {
             this.setKeyIcons(context);
-            this.wlc.emitEvent(kJSONPropertyMicrophoneConfigChanged, { context: context, property: kPropertyMicrophoneOutputVolume });
+            this.wlc.emitEvent(kJSONPropertyMicrophoneConfigChanged, {
+                context: context,
+                property: kPropertyMicrophoneOutputVolume
+            });
         }
 
         this.keyTimer.set(context, setTimeout(() => this.adjustValue(context, property, value), 200));
@@ -547,7 +562,7 @@ class HardwareAction extends WaveLinkAction {
             case kPropertyMicrophoneLowCutType:
                 return pluginPropertyID == kPropertyToggleLowcut;
             case kPropertyMicrophoneClipGuard:
-                return pluginPropertyID == kPropertyToggleClipguard; 
+                return pluginPropertyID == kPropertyToggleClipguard;
             case kPropertyMicrophoneGainLock:
                 return pluginPropertyID == kPropertytoggleGainLock;
             case kPropertyMicrophoneMute:
@@ -631,58 +646,58 @@ class HardwareAction extends WaveLinkAction {
                 var value = 0;
                 var indicatorValue = 0;
 
-				const isMuted = ~~microphone.isMicMuted;
+                const isMuted = ~~microphone.isMicMuted;
 
-				switch (deviceSetting) {
-					case kPropertyAdjustGain:
-						if (this.useLevelmeter(context)) {
-							const [firstKey] = this.wlc.microphones.keys();
-							const input = this.wlc.inputs.find((input, index) => input.identifier.includes(firstKey));
+                switch (deviceSetting) {
+                    case kPropertyAdjustGain:
+                        if (this.useLevelmeter(context)) {
+                            const [firstKey] = this.wlc.microphones.keys();
+                            const input = this.wlc.inputs.find((input, index) => input.identifier.includes(firstKey));
 
-							const levelLeft = input?.levelLeft || 0;
-							const levelRight = input?.levelRight || 0;
+                            const levelLeft = input?.levelLeft || 0;
+                            const levelRight = input?.levelRight || 0;
 
-							setIndicator = false;
+                            setIndicator = false;
 
-							payload.levelmeterTop = { 
-								value: this.getLevelmeterSVG(levelLeft)
-							}
-	
-							payload.levelmeterBottom = { 
-								value: this.getLevelmeterSVG(levelRight, true)
-							}
-						} else {
-							indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.gainIndex) * 100;
-						}
-						value = this.wlc.getValueConverter(deviceSetting).getSecondValueFromIndex(microphone.gainIndex);
-						break;
-					case kPropertyAdjustOutput:
-						if (this.useLevelmeter(context)) {
-							const output = this.wlc.getOutput();
+                            payload.levelmeterTop = {
+                                value: this.getLevelmeterSVG(levelLeft)
+                            }
 
-							const levelLeft = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelLeft : output?.stream.levelLeft;
-							const levelRight = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelRight : output?.stream.levelRight;
+                            payload.levelmeterBottom = {
+                                value: this.getLevelmeterSVG(levelRight, true)
+                            }
+                        } else {
+                            indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.gainIndex) * 100;
+                        }
+                        value = this.wlc.getValueConverter(deviceSetting).getSecondValueFromIndex(microphone.gainIndex);
+                        break;
+                    case kPropertyAdjustOutput:
+                        if (this.useLevelmeter(context)) {
+                            const output = this.wlc.getOutput();
 
-							setIndicator = false;
+                            const levelLeft = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelLeft : output?.stream.levelLeft;
+                            const levelRight = this.wlc.switchState == kPropertyMixerIDLocal ? output?.local.levelRight : output?.stream.levelRight;
 
-							payload.levelmeterTop = { 
-								value: this.getLevelmeterSVG(levelLeft)
-							}
+                            setIndicator = false;
 
-							payload.levelmeterBottom = { 
-								value: this.getLevelmeterSVG(levelRight, true)
-							}
-						} else {
-							indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.outputVolumeIndex) * 100;
-						}
-						value = this.wlc.getValueConverter(deviceSetting).getSecondValueFromIndex(microphone.outputVolumeIndex);
-						break;
-					case kPropertyAdjustMicPcBalance:
-						indicatorValue = microphone.balanceIndex;
-						break;
-					default:
-						return;
-				}
+                            payload.levelmeterTop = {
+                                value: this.getLevelmeterSVG(levelLeft)
+                            }
+
+                            payload.levelmeterBottom = {
+                                value: this.getLevelmeterSVG(levelRight, true)
+                            }
+                        } else {
+                            indicatorValue = this.wlc.getValueConverter(deviceSetting).getFirstValueFromIndex(microphone.outputVolumeIndex) * 100;
+                        }
+                        value = this.wlc.getValueConverter(deviceSetting).getSecondValueFromIndex(microphone.outputVolumeIndex);
+                        break;
+                    case kPropertyAdjustMicPcBalance:
+                        indicatorValue = microphone.balanceIndex;
+                        break;
+                    default:
+                        return;
+                }
 
                 if (setValue && deviceSetting != kPropertyAdjustMicPcBalance) {
                     const unit = ' dB';//this.wlc.localization?.mixerMute || '';
@@ -690,15 +705,15 @@ class HardwareAction extends WaveLinkAction {
 
                     payload.value = {
                         value: titleVolume,
-						color: isMuted ? '#E12A40' : 'white',
+                        color: isMuted ? '#E12A40' : 'white',
                         opacity: 1
                     }
                 }
 
                 if (setIndicator) {
                     payload.indicator = {
-                    value: indicatorValue,
-                    opacity: 1
+                        value: indicatorValue,
+                        opacity: 1
                     }
                 }
             }

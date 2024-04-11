@@ -2,30 +2,32 @@ class InputAction extends WaveLinkAction {
 
     feedbackBlocked = new Map();
 
-    constructor(uuid) { 
+    constructor(uuid) {
 
         super(uuid);
 
-        this.onKeyDown(async ({ context, payload }) => {
-            const { settings } = payload;
-            const identifier = this.getInputIdentifier(context, settings);   
+        this.onKeyDown(async ({context, payload}) => {
+            const {settings} = payload;
+            const identifier = this.getInputIdentifier(context, settings);
             const input = this.wlc.getInput(identifier);
-            
+
             try {
                 if (input && input.isAvailable) {
                     switch (settings.actionType) {
                         case ActionType.SetVolume:
-                            if (settings.mixerID == kPropertyMixerIDAll) 
+                            if (settings.mixerID == kPropertyMixerIDAll)
                                 throw `${settings.mixerID} is not available on ${ActionType.SetVolume}`;
-                        
+
                             const isNotBlocked = settings.mixerID == kPropertyMixerIDLocal ? input.isNotBlockedLocal : input.isNotBlockedStream;
-                            
+
                             if (isNotBlocked) {
                                 this.wlc.setInputConfig(context, kPropertyVolume, false, identifier, settings.mixerID, settings.volValue, settings.fadingDelay);
-                                
+
                                 if (settings.fadingDelay > 0) {
-                                    setTimeout(() => { $SD.showOk(context); }, settings.fadingDelay + 50) 
-                                } 
+                                    setTimeout(() => {
+                                        $SD.showOk(context);
+                                    }, settings.fadingDelay + 50)
+                                }
                             }
                             break;
                         case ActionType.AdjustVolume:
@@ -41,13 +43,13 @@ class InputAction extends WaveLinkAction {
             } catch (error) {
                 $SD.showAlert(context);
                 console.error(error);
-            } 
+            }
         });
 
-        this.onKeyUp(async ({ context, payload }) => {
-            const { settings } = payload;
-            const { isInMultiAction } = payload;
-            const identifier = this.getInputIdentifier(context, settings);   
+        this.onKeyUp(async ({context, payload}) => {
+            const {settings} = payload;
+            const {isInMultiAction} = payload;
+            const identifier = this.getInputIdentifier(context, settings);
             const input = this.wlc.getInput(identifier);
 
             try {
@@ -63,7 +65,7 @@ class InputAction extends WaveLinkAction {
                                 this.keyTimer.delete(context);
                             }
                             break;
-                    }        
+                    }
                 } else {
                     throw "Error"
                 }
@@ -75,9 +77,9 @@ class InputAction extends WaveLinkAction {
             this.setState(context);
         });
 
-        this.onDialRotate(({ context, payload }) => {
-            const { settings } = payload;
-            const { ticks } = payload;
+        this.onDialRotate(({context, payload}) => {
+            const {settings} = payload;
+            const {ticks} = payload;
             const identifier = this.getInputIdentifier(context, settings);
             const input = this.wlc.getInput(identifier);
 
@@ -89,24 +91,38 @@ class InputAction extends WaveLinkAction {
                     if (this.feedbackBlocked.get(identifier)) {
                         clearTimeout(this.feedbackBlocked.get(identifier));
                         this.feedbackBlocked.delete(identifier);
-                        this.feedbackBlocked.set(identifier, setTimeout(() => { this.feedbackBlocked.delete(identifier); }, 100));
+                        this.feedbackBlocked.set(identifier, setTimeout(() => {
+                            this.feedbackBlocked.delete(identifier);
+                        }, 100));
                     } else {
-                        this.feedbackBlocked.set(identifier, setTimeout(() => { this.feedbackBlocked.delete(identifier); }, 100));    
+                        this.feedbackBlocked.set(identifier, setTimeout(() => {
+                            this.feedbackBlocked.delete(identifier);
+                        }, 100));
                     }
 
                     if (this.feedbackBlocked.get(context)) {
                         clearTimeout(this.feedbackBlocked.get(context));
                         this.feedbackBlocked.delete(context);
 
-                        this.feedbackBlocked.set(context, setTimeout(() => { this.feedbackBlocked.delete(context); this.setFeedbackLayout(context); this.setFeedback(context); }, 2000));
+                        this.feedbackBlocked.set(context, setTimeout(() => {
+                            this.feedbackBlocked.delete(context);
+                            this.setFeedbackLayout(context);
+                            this.setFeedback(context);
+                        }, 2000));
                     } else {
-                        this.feedbackBlocked.set(context, setTimeout(() => { this.feedbackBlocked.delete(context); this.setFeedbackLayout(context); this.setFeedback(context); }, 2000));    
+                        this.feedbackBlocked.set(context, setTimeout(() => {
+                            this.feedbackBlocked.delete(context);
+                            this.setFeedbackLayout(context);
+                            this.setFeedback(context);
+                        }, 2000));
 
                         this.setFeedbackLayout(context);
                         this.setFeedback(context);
                     }
 
-                    this.throttleUpdate(context, 100, () => { this.setFeedbackVolume(context); });
+                    this.throttleUpdate(context, 100, () => {
+                        this.setFeedbackVolume(context);
+                    });
                 } else {
                     throw input && input.isAvailable ? `Wrong ActionType: ${settings.actionType}.` : 'No input available.';
                 }
@@ -116,14 +132,14 @@ class InputAction extends WaveLinkAction {
             }
         });
 
-        this.onDialUp(({ context, payload }) => {
-            const { pressed } = payload;
+        this.onDialUp(({context, payload}) => {
+            const {pressed} = payload;
 
             if (!pressed)
                 this.muteInput(context, payload);
         });
 
-        this.onTouchTap(({ context, payload }) => {
+        this.onTouchTap(({context, payload}) => {
             this.muteInput(context, payload);
         });
 
@@ -157,10 +173,10 @@ class InputAction extends WaveLinkAction {
 
         this.wlc.onEvent(kJSONPropertyInputVolumeChanged, (payload) => {
             this.actions.forEach((action, actionContext) => {
-                const { settings } = action;
-                const { identifier } = payload;
-                const { context } = payload;
-                const { updateAll } = payload;
+                const {settings} = action;
+                const {identifier} = payload;
+                const {context} = payload;
+                const {updateAll} = payload;
 
                 if (actionContext != context && updateAll) {
                     if (settings.identifier == identifier && action.isEncoder) {
@@ -178,10 +194,10 @@ class InputAction extends WaveLinkAction {
 
         this.wlc.onEvent(kJSONPropertyInputLevelChanged, (payload) => {
             this.actions.forEach((action, actionContext) => {
-                const { settings } = action;
-                const { identifier } = payload;
-                const { context } = payload;
-                const { updateAll } = payload;
+                const {settings} = action;
+                const {identifier} = payload;
+                const {context} = payload;
+                const {updateAll} = payload;
 
                 if (actionContext != context && updateAll) {
                     if (settings.identifier == identifier && action.isEncoder) {
@@ -199,7 +215,7 @@ class InputAction extends WaveLinkAction {
 
         this.wlc.onEvent(kJSONPropertyInputNameChanged, (payload) => {
             this.actions.forEach((action, context) => {
-                
+
                 if (settings.identifier == payload.identifier && settings.mixerID == payload.mixerID && action.isEncoder) {
                     this.setFeedback(context);
                 } else if (action.settings.identifier == payload.identifier && action.settings.actionType == ActionType.Mute) {
@@ -220,9 +236,9 @@ class InputAction extends WaveLinkAction {
                 bgColor: settings.isColored && this.wlc.UP_WINDOWS ? input?.bgColor : '',
                 value: settings.mixerID == kPropertyMixerIDLocal ? -input.local.volume + 100 : -input.stream.volume + 100,
                 levelLeft: input.levelLeft,
-                levelRight : input.levelRight,
+                levelRight: input.levelRight,
                 isTop: settings.volValue >= 0 ? true : false,
-                orientation: settings.actionStyle  
+                orientation: settings.actionStyle
             }
 
             if (options.value == undefined || options.value == NaN) {
@@ -235,27 +251,27 @@ class InputAction extends WaveLinkAction {
                 case 2:
                     $SD.setImage(context, this.getBase64FaderSVG(context, options));
                     break;
-				case 3:
-				case 4:
-					if (this.checkIfKeyIconUpdateIsNeeded(context, settings.actionStyle, settings.identifier, options, notificationType)) {
-						this.throttleUpdate(context, 50, () => {
-							options.levelLeft = input?.levelLeft;
-							options.levelRight = input?.levelRight;
+                case 3:
+                case 4:
+                    if (this.checkIfKeyIconUpdateIsNeeded(context, settings.actionStyle, settings.identifier, options, notificationType)) {
+                        this.throttleUpdate(context, 50, () => {
+                            options.levelLeft = input?.levelLeft;
+                            options.levelRight = input?.levelRight;
 
-							$SD.setImage(context, this.getBase64FaderAndLevelmeterSVG(context, options));
-						});
-					}
-					break;
+                            $SD.setImage(context, this.getBase64FaderAndLevelmeterSVG(context, options));
+                        });
+                    }
+                    break;
                 default:
                     break;
-            } 
+            }
         } else {
             const images = this.getKeyIcon(context);
 
             var imgUnmuted = images[0];
             var imgMuted = images[1];
 
-            if (typeof(imgUnmuted) == "object") {
+            if (typeof (imgUnmuted) == "object") {
                 imgUnmuted = images[0].toBase64(true);
                 imgMuted = images[1].toBase64(true);
             }
@@ -286,7 +302,7 @@ class InputAction extends WaveLinkAction {
             }
         } else {
             $SD.setState(context, 0);
-        }      
+        }
     }
 
     async setFeedback(context) {
@@ -328,7 +344,7 @@ class InputAction extends WaveLinkAction {
 
                 switch (icon) {
                     case 'wave':
-                        icon = this.wlc.UP_MAC ? `${icon}${mixer}${muteIcon}MacOS` :`${icon}${mixer}${muteIcon}`;
+                        icon = this.wlc.UP_MAC ? `${icon}${mixer}${muteIcon}MacOS` : `${icon}${mixer}${muteIcon}`;
                         break;
                     default:
                         if (this.wlc.UP_MAC)
@@ -337,10 +353,10 @@ class InputAction extends WaveLinkAction {
                             icon = `${icon}${mixer}${muteIcon}`;
                         break;
                 }
-                
+
                 const percentSign = this.wlc.localization?.mixerMute || '';
 
-                const localVolume = input?.local.volume != undefined ? input?.local.volume : '--' ;
+                const localVolume = input?.local.volume != undefined ? input?.local.volume : '--';
                 const streamVolume = input?.stream.volume != undefined ? input?.stream.volume : '--';
                 const volume = settings.mixerID == kPropertyMixerIDLocal ? localVolume : streamVolume;
 
@@ -373,19 +389,19 @@ class InputAction extends WaveLinkAction {
                     };
 
                     if (this.useLevelmeter(context)) {
-                        payload.levelmeterTop1 = { 
+                        payload.levelmeterTop1 = {
                             value: this.getLevelmeterSVG(levelLeft, false, true)
                         }
 
-                        payload.levelmeterBottom1 = { 
+                        payload.levelmeterBottom1 = {
                             value: this.getLevelmeterSVG(levelRight, true, true)
                         }
 
-                        payload.levelmeterTop2 = { 
+                        payload.levelmeterTop2 = {
                             value: this.getLevelmeterSVG(levelLeft, false, true)
                         }
 
-                        payload.levelmeterBottom2 = { 
+                        payload.levelmeterBottom2 = {
                             value: this.getLevelmeterSVG(levelRight, true, true)
 
                         }
@@ -412,25 +428,25 @@ class InputAction extends WaveLinkAction {
                     }
 
                     if (this.useLevelmeter(context)) {
-                        payload.levelmeterTop = { 
+                        payload.levelmeterTop = {
                             value: this.getLevelmeterSVG(levelLeft)
                         }
 
-                        payload.levelmeterBottom = { 
+                        payload.levelmeterBottom = {
                             value: this.getLevelmeterSVG(levelRight, true)
                         }
                     } else {
                         payload.indicator = {
                             value: volume || 0,
-							opacity: 1
+                            opacity: 1
                         }
                     }
                 }
 
-                $SD.send(context, "setFeedback", { payload });
+                $SD.send(context, "setFeedback", {payload});
             }
         } else {
-            $SD.send(context, "setFeedback", { 
+            $SD.send(context, "setFeedback", {
                 payload: {
                     icon: {
                         value: this.awl.touchIconWarning
@@ -471,7 +487,7 @@ class InputAction extends WaveLinkAction {
 
             const hasIconData = input && input?.iconData && (input?.iconData.length > 0);
             const useIconData = hasIconData && (settings.actionType == ActionType.Mute || settings.actionType == ActionType.SetVolume || isEncoder) ? 'macAppIcon' : 'icon';
-    
+
             const mixer = settings.mixerID == kPropertyMixerIDLocal ? 'Monitor' : settings.mixerID == kPropertyMixerIDStream ? 'Stream' : 'All';
 
             var icon;
@@ -503,7 +519,7 @@ class InputAction extends WaveLinkAction {
             }
 
             var icon2 = icon, overlay = '', set = '';
-        
+
             if (settings.actionType == ActionType.Mute || isEncoder) {
                 switch (icon) {
                     case 'wave':
@@ -515,7 +531,7 @@ class InputAction extends WaveLinkAction {
                         if (this.wlc.UP_MAC) {
                             icon = input?.name ? `${input?.name}${mixer}` : kPropertyDefault;
                             icon2 = input?.name ? `${input?.name}${mixer}Mute` : kPropertyDefault;
-                            
+
                         } else {
                             icon = icon == kPropertyDefault ? icon : `${icon}${mixer}`;
                             icon2 = icon2 == kPropertyDefault ? icon : `${icon2}${mixer}Mute`;
@@ -537,22 +553,22 @@ class InputAction extends WaveLinkAction {
                 }
             }
 
-            const svgIcon = this.awl.keyIconsInput[icon]; 
+            const svgIcon = this.awl.keyIconsInput[icon];
             const svgIcon2 = this.awl.keyIconsInput[icon2];
 
-            if (typeof(svgIcon) == "object") {
+            if (typeof (svgIcon) == "object") {
                 if (settings.actionType == ActionType.Mute) {
                     const percentSign = this.wlc.localization?.mixerMute || '';
-                    const localVolume = input?.local.volume != undefined ? input?.local.volume : '--' ;
+                    const localVolume = input?.local.volume != undefined ? input?.local.volume : '--';
                     const streamVolume = input?.stream.volume != undefined ? input?.stream.volume : '--';
                     const volume = settings.mixerID == kPropertyMixerIDLocal ? localVolume : streamVolume;
 
                     const volumeText = settings.mixerID == kPropertyMixerIDAll ? (`${localVolume} | ${streamVolume}`) : (`${percentSign?.percentFirst || ''}${volume}${percentSign?.percentLast || ''}`);
 
-                    svgIcon.fontSize = { lower: 26 };
-                    svgIcon.text = volume != undefined ? { lower: `${volumeText}` } : '';
-                    svgIcon2.fontSize = { lower: 26 };
-                    svgIcon2.text = volume != undefined ? { lower: `${volumeText}` } : '';
+                    svgIcon.fontSize = {lower: 26};
+                    svgIcon.text = volume != undefined ? {lower: `${volumeText}`} : '';
+                    svgIcon2.fontSize = {lower: 26};
+                    svgIcon2.text = volume != undefined ? {lower: `${volumeText}`} : '';
 
                 } else {
                     svgIcon.text = '';
@@ -560,17 +576,17 @@ class InputAction extends WaveLinkAction {
                 }
 
                 if (this.wlc.UP_WINDOWS) {
-                    const mixerOverlay = settings.mixerID == kPropertyMixerIDLocal ?  `overlayMonitor` : settings.mixerID == kPropertyMixerIDStream ? `overlayStream` : '';
+                    const mixerOverlay = settings.mixerID == kPropertyMixerIDLocal ? `overlayMonitor` : settings.mixerID == kPropertyMixerIDStream ? `overlayStream` : '';
 
                     if (settings.actionType == ActionType.Mute) {
                         const muteIndicatorOverlay = settings.mixerID != kPropertyMixerIDAll ? 'muteIndicator' : '';
 
-                        svgIcon.layerOrder = ['fill', useIconData, 'text', `${mixerOverlay}` ];
-                        svgIcon2.layerOrder = ['fill', useIconData, 'text', settings.mixerID == kPropertyMixerIDAll ? 'mute' : 'overlayMuteMonitorStream', `${mixerOverlay}`, `${muteIndicatorOverlay}` ];
+                        svgIcon.layerOrder = ['fill', useIconData, 'text', `${mixerOverlay}`];
+                        svgIcon2.layerOrder = ['fill', useIconData, 'text', settings.mixerID == kPropertyMixerIDAll ? 'mute' : 'overlayMuteMonitorStream', `${mixerOverlay}`, `${muteIndicatorOverlay}`];
                     } else if (settings.actionType == ActionType.SetVolume) {
-                        svgIcon.layerOrder = ['fill', useIconData, 'overlaySet' ];
+                        svgIcon.layerOrder = ['fill', useIconData, 'overlaySet'];
                     }
-                    
+
                     svgIcon.backgroundColor = settings.isColored && this.wlc.UP_WINDOWS ? input?.bgColor : '';
                     svgIcon2.backgroundColor = settings.isColored && this.wlc.UP_WINDOWS ? input?.bgColor : '';
                 }
@@ -586,28 +602,32 @@ class InputAction extends WaveLinkAction {
         const settings = this.actions.get(context).settings;
 
         this.wlc.setInputConfig(context, property, methodType, identifier, mixerID, value);
-        
+
         // Only for slider keys: Update key icon and notify buddy key
         if (settings.actionStyle != 0) {
             if (this.feedbackBlocked.get(identifier)) {
                 clearTimeout(this.feedbackBlocked.get(identifier));
                 this.feedbackBlocked.delete(identifier);
 
-                this.feedbackBlocked.set(identifier, setTimeout(() => { this.feedbackBlocked.delete(identifier); }, 100));
+                this.feedbackBlocked.set(identifier, setTimeout(() => {
+                    this.feedbackBlocked.delete(identifier);
+                }, 100));
             } else {
-                this.feedbackBlocked.set(identifier, setTimeout(() => { this.feedbackBlocked.delete(identifier); }, 100));    
+                this.feedbackBlocked.set(identifier, setTimeout(() => {
+                    this.feedbackBlocked.delete(identifier);
+                }, 100));
 
                 this.setKeyIcons(context);
-                this.wlc.emitEvent(kJSONPropertyInputVolumeChanged, { context, identifier, mixerID });
+                this.wlc.emitEvent(kJSONPropertyInputVolumeChanged, {context, identifier, mixerID});
             }
         }
-        
+
         this.keyTimer.set(context, setTimeout(() => this.adjustVolume(context, property, methodType, identifier, mixerID, value), 200));
     }
 
     muteInput(context, payload) {
-        const { settings } = payload;
-        const identifier = this.getInputIdentifier(context, settings);   
+        const {settings} = payload;
+        const identifier = this.getInputIdentifier(context, settings);
         const input = this.wlc.getInput(identifier);
 
         try {
@@ -617,7 +637,7 @@ class InputAction extends WaveLinkAction {
                 this.wlc.setInputConfig(context, kPropertyMute, false, identifier, settings.mixerID, newValue);
             } else {
                 throw input ? `Wrong ActionType: ${settings.actionType}.` : 'No input available.';
-            }            
+            }
         } catch (error) {
             $SD.showAlert(context);
             console.error(error);

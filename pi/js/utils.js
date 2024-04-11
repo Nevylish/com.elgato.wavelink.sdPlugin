@@ -1,10 +1,10 @@
 //==============================================================================
 /**
-@file       utils.js
-@brief      4KCU Plugin
-@copyright  (c) 2019, Corsair Memory, Inc.
-            This source code is licensed under the MIT-style license found in the LICENSE file.
-**/
+ @file       utils.js
+ @brief      4KCU Plugin
+ @copyright  (c) 2019, Corsair Memory, Inc.
+  This source code is licensed under the MIT-style license found in the LICENSE file.
+ **/
 //==============================================================================
 
 // Register the plugin or PI
@@ -152,12 +152,10 @@ function getLocalization(inLanguage, inCallback) {
                 data = JSON.parse(xhr.responseText);
                 var localization = data['Localization'];
                 inCallback(true, localization);
-            }
-            catch(e) {
+            } catch (e) {
                 inCallback(false, 'Localizations is not a valid json.');
             }
-        }
-        else {
+        } else {
             inCallback(false, 'Could not load the localizations.');
         }
     };
@@ -183,11 +181,11 @@ function updatePIsNoticeMsg(inAction, inContext, isAppRunning, isConnectionEstab
             1           1         'AppConnectionIsOpened'
     */
     var evt = {};
-    if (isAppRunning==false)
+    if (isAppRunning == false)
         evt = {'AppIsTerminated': true};
-    else if (isAppRunning==true && isConnectionEstablished==false)
+    else if (isAppRunning == true && isConnectionEstablished == false)
         evt = {'oldVerAppIsRunning': true};
-    else if (isAppRunning==true && isConnectionEstablished==true)
+    else if (isAppRunning == true && isConnectionEstablished == true)
         evt = {'AppConnectionIsOpened': true};
 
     sendEventsToPI(PI_action, PI_context, evt);

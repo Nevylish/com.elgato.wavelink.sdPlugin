@@ -9,11 +9,11 @@ class LookupTableConverter {
 
     getFirstValueFromIndex(index) {
         return this.getValueFromIndex(index, 0);
-	}
+    }
 
     getSecondValueFromIndex(index) {
         return this.getValueFromIndex(index, 1);
-	}
+    }
 
     getValueFromIndex(index, valuePos) {
         try {
@@ -26,17 +26,17 @@ class LookupTableConverter {
             return this.lookupTable[index][valuePos];
         } catch (error) {
         }
-	}
+    }
 
     getIndexFromFirstValue(index) {
         return this.getIndexFromValue(index, 0);
-	}
+    }
 
     getIndexFromSecondValue(index) {
         return this.getIndexFromValue(index, 1);
-	}
+    }
 
-    getIndexFromValue(value, valuePos)  {
+    getIndexFromValue(value, valuePos) {
         var idx = 0;
 
         for (let entry of this.lookupTable) {
@@ -47,6 +47,6 @@ class LookupTableConverter {
             idx++;
         }
 
-        return idx;        
-	}
+        return idx;
+    }
 }

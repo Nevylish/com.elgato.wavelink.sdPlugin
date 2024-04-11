@@ -1,25 +1,25 @@
 const fadeColor = function (col, amt) {
-	const min = Math.min,
-		max = Math.max;
-	const num = parseInt(col.replace(/#/g, ''), 16);
-	const r = min(255, max((num >> 16) + amt, 0));
-	const g = min(255, max((num & 0x0000ff) + amt, 0));
-	const b = min(255, max(((num >> 8) & 0x00ff) + amt, 0));
-	return '#' + (g | (b << 8) | (r << 16)).toString(16).padStart(6, 0);
+    const min = Math.min,
+        max = Math.max;
+    const num = parseInt(col.replace(/#/g, ''), 16);
+    const r = min(255, max((num >> 16) + amt, 0));
+    const g = min(255, max((num & 0x0000ff) + amt, 0));
+    const b = min(255, max(((num >> 8) & 0x00ff) + amt, 0));
+    return '#' + (g | (b << 8) | (r << 16)).toString(16).padStart(6, 0);
 };
 
-$SD.onConnected(({ appInfo }) => {
-	if (appInfo?.colors) return;
-	const clrs = appInfo.colors;
-	const node = document.getElementById('#sdpi-dynamic-styles') || document.createElement('style');
-	if (!clrs.mouseDownColor) clrs.mouseDownColor = fadeColor(clrs.highlightColor, -100);
-	const clr = clrs.highlightColor.slice(0, 7);
-	const clr1 = fadeColor(clr, 100);
-	const clr2 = fadeColor(clr, 60);
-	const metersActiveColor = fadeColor(clr, -60);
+$SD.onConnected(({appInfo}) => {
+    if (appInfo?.colors) return;
+    const clrs = appInfo.colors;
+    const node = document.getElementById('#sdpi-dynamic-styles') || document.createElement('style');
+    if (!clrs.mouseDownColor) clrs.mouseDownColor = fadeColor(clrs.highlightColor, -100);
+    const clr = clrs.highlightColor.slice(0, 7);
+    const clr1 = fadeColor(clr, 100);
+    const clr2 = fadeColor(clr, 60);
+    const metersActiveColor = fadeColor(clr, -60);
 
-	node.setAttribute('id', 'sdpi-dynamic-styles');
-	node.innerHTML = `
+    node.setAttribute('id', 'sdpi-dynamic-styles');
+    node.innerHTML = `
 
     input[type="radio"]:checked + label span,
     input[type="checkbox"]:checked + label span {
@@ -66,5 +66,5 @@ $SD.onConnected(({ appInfo }) => {
         background: linear-gradient(${clr}, ${clr2} 20%, ${metersActiveColor} 45%, ${metersActiveColor} 55%, ${clr})
     }
     `;
-	document.body.appendChild(node);
+    document.body.appendChild(node);
 });

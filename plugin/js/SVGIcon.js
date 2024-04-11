@@ -1,7 +1,7 @@
 // super-tiny emitter - needs 'function' to keep 'this' private
 /*eslint-env es6*/
 
-const Events2 = function(instance) {
+const Events2 = function (instance) {
     const _cbs = [];
     instance.on = (key, callback) => !_cbs[key] ? _cbs[key] = [callback] : _cbs[key].push(callback);
     instance.emit = (key, ...params) => _cbs[key] && _cbs[key].forEach(cb => cb(...params));
@@ -9,7 +9,7 @@ const Events2 = function(instance) {
 'use strict';
 
 /**
- * 
+ *
  */
 class SVGIcon {
 
@@ -23,7 +23,7 @@ class SVGIcon {
      * <br><br>can also be an object specifying the individual boxes (e.g. {text: {upper: 'Hello', lower: 'World', middle:''}})
      * @property  {String} icon name of the shown icon
      * @property  {Array} layerOrder change the layer-order of the icon-layers
-     * * <br> 
+     * * <br>
      * <br>Note: This can also be used to show/hide layers... just pass the name of the layers to get shown in the array
      * @property {String} backgroundColor any CSS color-string
      * <br> e.g.
@@ -33,7 +33,7 @@ class SVGIcon {
      * <br><br>can also be an object specifying the individual boxes (e.g. {fontColor: {upper: 'green'}})
      * @property  {Number} fontSize font-size of text-boxes
      * <br><br>can also be an object specifying the individual boxes (e.g. {fontSize: {upper: 24, middle: 96}})
-     * 
+     *
      * @property  {Number} fontWeight font-weight of text-boxes
      * <br><br>can also be an object specifying the individual boxes (e.g. {fontWeight: {upper: 'normal', middle: 'bold'}})
      * @property  {Number} fontStyle font-style of text-boxes
@@ -44,7 +44,7 @@ class SVGIcon {
      * @property  {Number} textStrokeWidth stroke-width of the SVG  (default: 3)
      *
      */
-    constructor (settings = {}, inOptions = {}, inDebug = false) {
+    constructor(settings = {}, inOptions = {}, inDebug = false) {
 
         // //console.log("SVGIcon", settings);
         let baseIconContainerCreated = false;
@@ -62,7 +62,7 @@ class SVGIcon {
         };
 
         const extend = (obj, inValue) => {
-            for(let e in inValue) {
+            for (let e in inValue) {
                 obj[e] = inValue[e];
             }
             return obj;
@@ -70,17 +70,17 @@ class SVGIcon {
 
         const initProps = (svg) => {
             const bg = this.findBackground(svg);
-            if(bg) {
+            if (bg) {
                 this._fixLayer(bg, 'id');
             }
-            if(settings && settings.backgroundColor) {
+            if (settings && settings.backgroundColor) {
                 this._options.backgroundColor = settings.backgroundColor;
             } else {
                 this._options.backgroundColor = bg && bg.getAttribute('fill') || 'transparent';
             }
 
-            if(svg.height.baseVal.value > 144) {
-                if(!this.layerProps.hasOwnProperty('icon')) {
+            if (svg.height.baseVal.value > 144) {
+                if (!this.layerProps.hasOwnProperty('icon')) {
                     this.layerProps.icon = {};
                 }
                 this.layerProps['icon'].transform = `scale(${144 / svg.height.baseVal.value || 1})`;
@@ -94,13 +94,13 @@ class SVGIcon {
         const getTextAlign = (value) => {
             let textAnchor = 'middle';
             let textLeft = 72;
-            if(value == 'left' || value == 'start') {
+            if (value == 'left' || value == 'start') {
                 textAnchor = "start";
                 textLeft = 2;
-            } else if(value == 'middle' || value == 'center') {
+            } else if (value == 'middle' || value == 'center') {
                 textAnchor = "middle";
                 textLeft = 72;
-            } else if(value == 'right' || value == 'end') {
+            } else if (value == 'right' || value == 'end') {
                 textAnchor = "end";
                 textLeft = 144;
             }
@@ -186,9 +186,9 @@ class SVGIcon {
              * @returns {String} The current icon's name.  {@link showIconLayer}
              */
             icon: (value) => {
-                if(value) {
+                if (value) {
                     this._icon = value; // this is very optimistic ¯\_(ツ)_/¯
-                    if(this.iconSVG == this.stringToSVG(this.icons[value])) {
+                    if (this.iconSVG == this.stringToSVG(this.icons[value])) {
                         this.dbg("++++++ ICON already there:", value);
                     } else {
                         this.dbg('---setting icon:', value);
@@ -196,7 +196,7 @@ class SVGIcon {
 
                     this.getIcons().then(() => {
                         const svg = this.icons[value];
-                        if(svg) {
+                        if (svg) {
                             initProps(svg);
                             // } else {
                             //     //console.log('NO SUCH ICON: ', this.id, value, this.icons, svg);
@@ -212,58 +212,58 @@ class SVGIcon {
             fontColor: (value) => this.setTextAttributes(value, '_fontColor', {validate: isColor}),
             fontSize: (value) => this.setTextAttributes(value, '_fontSize', {validate: (v) => v > 0}),
             /**
-          
-           *
-           * @name SVGIcon#fontStyle
-           * @type String
-           * @default "bold" <br>
-           * possible values: 'normal,bold'
-           * @returns {String} the current font-style
-           */
+
+             *
+             * @name SVGIcon#fontStyle
+             * @type String
+             * @default "bold" <br>
+             * possible values: 'normal,bold'
+             * @returns {String} the current font-style
+             */
             fontStyle: (value) => this.setTextAttributes(value, '_fontStyle'),
             /**
-           * 
-           * @summary set the font-weight of the textboxes<br>
-           * .
-           * the value is any CSS string (including hex with transparency e.g. #ffffff80)
-           * 
-           * @description Some description
-           * - Example bullet
-           * - Example bullet
-           * @tag Hello
-           * 
-           * @example
-           * #ffffff80
-           * also: Passing an object with the text-members is possible too 
-           * @example
-           * fontSize: {
-           *    upper: 24,
-           *    middle: 96
-           * }
-           * 
-           * @name SVGIcon#fontWeight
-           * @type String
-           * @default "bold"
-           * @returns {String} the current stroke-color<br>
-           */
+             *
+             * @summary set the font-weight of the textboxes<br>
+             * .
+             * the value is any CSS string (including hex with transparency e.g. #ffffff80)
+             *
+             * @description Some description
+             * - Example bullet
+             * - Example bullet
+             * @tag Hello
+             *
+             * @example
+             * #ffffff80
+             * also: Passing an object with the text-members is possible too
+             * @example
+             * fontSize: {
+             *    upper: 24,
+             *    middle: 96
+             * }
+             *
+             * @name SVGIcon#fontWeight
+             * @type String
+             * @default "bold"
+             * @returns {String} the current stroke-color<br>
+             */
             fontWeight: (value) => this.setTextAttributes(value, '_fontWeight'),
 
             /**
-            * set the stroke-color of the textboxes
-            * @name SVGIcon#textStroke
-            * @type String
-            * @default "black"
-            * @returns {String} the current stroke-color
-            */
+             * set the stroke-color of the textboxes
+             * @name SVGIcon#textStroke
+             * @type String
+             * @default "black"
+             * @returns {String} the current stroke-color
+             */
             textStroke: (value) => this.setTextAttributes(value, '_textStroke'),
 
             /**
-           * set the stroke-width of the textboxes
-           * @name SVGIcon#textStrokeWidth
-           * @type Number
-           * @default 3
-           * @returns {Number} the current stroke-width
-           */
+             * set the stroke-width of the textboxes
+             * @name SVGIcon#textStrokeWidth
+             * @type Number
+             * @default 3
+             * @returns {Number} the current stroke-width
+             */
             textStrokeWidth: (value) => this.setTextAttributes(value, '_textStrokeWidth'),
 
             /**
@@ -274,12 +274,14 @@ class SVGIcon {
              * @returns {Array} the current layer order
              */
             layerOrder: (value) => {
-                if(Array.isArray(value)) {this._layerOrder = value;}
+                if (Array.isArray(value)) {
+                    this._layerOrder = value;
+                }
                 return this._layerOrder;
             },
             /**
-            * @name SVGIcon#innerHTMLSync
-            */
+             * @name SVGIcon#innerHTMLSync
+             */
             innerHTMLSync: (options) => this.innerHTMLFn(options),
             /**
              * Align text-boxes<br>
@@ -304,24 +306,24 @@ class SVGIcon {
         };
 
 
-        /** 
+        /**
          * END OPTIONS
          */
 
-        if(settings && settings.icons && settings.icon) {
-            if(typeof settings === 'string') {
+        if (settings && settings.icons && settings.icon) {
+            if (typeof settings === 'string') {
                 this.dbg("-------- SETTINGS = STRING:", settings);
                 // this.getIconPromise = this.loadIcons(settings);
                 const loadedSVG = this.loadSVGSync(settings, false);
                 //console.log(loadedSVG);
-                if(loadedSVG) initProps(this.stringToSVG(loadedSVG));
+                if (loadedSVG) initProps(this.stringToSVG(loadedSVG));
                 baseIconContainerCreated = true;
-            } else if(typeof settings === 'object') {
+            } else if (typeof settings === 'object') {
                 const tIcon = settings.icons[settings.icon];
                 this.dbg("-------- SETTINGS = OBJECT:", settings, settings.icon, tIcon);
-                if(tIcon) {
+                if (tIcon) {
                     const loadedSVG = this.loadSVGSync(tIcon, false);
-                    if(loadedSVG) initProps(this.stringToSVG(loadedSVG));
+                    if (loadedSVG) initProps(this.stringToSVG(loadedSVG));
                     baseIconContainerCreated = true;
                 }
             }
@@ -332,7 +334,7 @@ class SVGIcon {
          */
 
         let moreSettings;
-        if(typeof settings === 'string') {
+        if (typeof settings === 'string') {
             moreSettings = inOptions;
         } else {
             moreSettings = settings;
@@ -340,15 +342,15 @@ class SVGIcon {
 
         this.dbg("MORESETTINGS", moreSettings, typeof moreSettings);
 
-        if(moreSettings && typeof moreSettings === 'object') {
+        if (moreSettings && typeof moreSettings === 'object') {
             Object.keys(this._options).forEach(o => {
-                if(o.charAt(0) == '_' && typeof this._options[o] === 'object') {
+                if (o.charAt(0) == '_' && typeof this._options[o] === 'object') {
                     const p = o.slice(1);
                     let inValue = moreSettings[p];
-                    if(p.includes('textAlign')) {
+                    if (p.includes('textAlign')) {
                         this.setTextAttributes(inValue, '_textAlign', {setter: getTextAlign}, this._options);
-                    } else if(moreSettings.hasOwnProperty(p)) {
-                        if(p.includes('fontColor')) {
+                    } else if (moreSettings.hasOwnProperty(p)) {
+                        if (p.includes('fontColor')) {
                             this.setTextAttributes(inValue, '_fontColor', null, this._options);
                         } else {
                             extend(this._options[o], inValue);
@@ -358,11 +360,11 @@ class SVGIcon {
             });
         }
 
-        if(typeof settings === 'string') {  // new SVGIcon('./svgimages/AUX.svg')
+        if (typeof settings === 'string') {  // new SVGIcon('./svgimages/AUX.svg')
             this.getIconPromise = this.loadIcons(settings);
-        } else if(typeof settings === 'object' && Array.isArray(settings)) {
+        } else if (typeof settings === 'object' && Array.isArray(settings)) {
             this.getIconPromise = this.loadIcons(settings);
-        } else if(typeof settings === 'object' && settings.hasOwnProperty('icons')) {
+        } else if (typeof settings === 'object' && settings.hasOwnProperty('icons')) {
             this.getIconPromise = this.loadIcons(settings.icons);
         } else {
             // create fallback icon
@@ -373,7 +375,7 @@ class SVGIcon {
             baseIconContainerCreated = true;
         }
 
-        if(!baseIconContainerCreated) {
+        if (!baseIconContainerCreated) {
             this.getIconPromise.then(d => {
                 let tSvg = this.icons[Object.keys(this.icons)[0]];
                 initProps(tSvg);
@@ -402,25 +404,27 @@ class SVGIcon {
 
     /**
      * hideBackground
-    * Hide the SVGIcon's background (note: if the icon contains a background you can show/hide it using).
-    * @returns {String} The text in the lower text-box.  {@link showIconLayer}
-    */
+     * Hide the SVGIcon's background (note: if the icon contains a background you can show/hide it using).
+     * @returns {String} The text in the lower text-box.  {@link showIconLayer}
+     */
 
     hideBackground = () => this.showBackground = false;
     toggleBackground = () => this.showBackground = !this.showBackground;
     findBackground = (svg) => svg.querySelector("#background") || svg.querySelector("#Background") || svg.querySelector('rect');
 
-    setBackground = (value) => { this.backgroundColor = value; } //console.log(this.backgroundColor); 
+    setBackground = (value) => {
+        this.backgroundColor = value;
+    } //console.log(this.backgroundColor);
 
     setTextAttributes = (value, prop, options, trgt) => {
-        if(value === undefined) return this[prop];
+        if (value === undefined) return this[prop];
         const obj = trgt || this;
         const validate = (options && options.validate && typeof options.validate === 'function') ? options.validate : () => true;
         const setter = (options && options.setter && typeof options.setter === 'function') ? options.setter : (v) => v;
         let dirty = false;
 
-        if(typeof value == 'string' || typeof value == 'number') {
-            if(validate(value)) {
+        if (typeof value == 'string' || typeof value == 'number') {
+            if (validate(value)) {
                 let newValue = setter(value);
                 obj[prop] = {
                     upper: newValue,
@@ -429,15 +433,16 @@ class SVGIcon {
                 };
                 dirty = true;
             }
-        } else if(typeof value == 'object') {
-            for(let e in value) {
-                if(validate(value[e]) && obj[prop][e] !== setter(value[e])) {
+        } else if (typeof value == 'object') {
+            for (let e in value) {
+                if (validate(value[e]) && obj[prop][e] !== setter(value[e])) {
                     dirty = true;
                     obj[prop][e] = setter(value[e]);
-                };
+                }
+                ;
             }
         }
-        if(dirty) this.update();
+        if (dirty) this.update();
     };
 
     getIconLayer = (selector) => selector && this.iconSVG && this.iconSVG.querySelector(selector);
@@ -448,8 +453,8 @@ class SVGIcon {
     /**
      * showIconLayer<br>
      * show or hide a layer _INSIDE_ the icon {@link hideBackground}<br>
-     * @param {String} selector 
-     * @param {Boolean} showOrHide 
+     * @param {String} selector
+     * @param {Boolean} showOrHide
      * @returns {Object} The currently processed layer or NULL
      */
     showIconLayer = (selector, showOrHide) => {
@@ -458,7 +463,7 @@ class SVGIcon {
 
     setIconLayerProperty = (selector, prop, value) => {
         const lyr = this.getIconLayer(selector);
-        if(lyr) {
+        if (lyr) {
             lyr.setAttribute(prop, value);
             this.update();
         }
@@ -467,7 +472,7 @@ class SVGIcon {
     setIconProperty = this.setIconLayerProperty;
 
     /**
-     * 
+     *
      */
     _addLayers = () => {
         this.addLayer('background', (o) => `<path ${this._props(o)} fill="${o.backgroundColor || this._options.backgroundColor}" d="M0 0h144v144H0z"/>`);
@@ -479,7 +484,10 @@ class SVGIcon {
         this.addLayer('icon', (o) => `<g ${this._props(o)} class="icon">${this.iconSVG && typeof this.iconSVG === 'object' ? this.iconSVG.innerHTML : this.iconSVG}</g>`);
 
         this.addLayer('overlay', (o) => `<g ${this._props(o)} ><path id="overlay" fill="#000" d="M29.5736 25.9167l90.5097 90.5097-5.6569 5.6569-90.5097-90.5097 5.6569-5.6569z"/>
-                               <path fill="#FFF" d="M29.5736 23.9167l90.5097 90.5097-5.6569 5.6569-90.5097-90.5097 5.6569-5.6569z"/></g>`, {visible: false, opacity: .9}, ['mute']);
+                               <path fill="#FFF" d="M29.5736 23.9167l90.5097 90.5097-5.6569 5.6569-90.5097-90.5097 5.6569-5.6569z"/></g>`, {
+            visible: false,
+            opacity: .9
+        }, ['mute']);
 
 
         this.addLayer('text', (opt) => {
@@ -510,14 +518,14 @@ class SVGIcon {
      * svgIcon.addLayer('kclogo', 'https://kc.smm.io/beta/svgimages/kc.svg');<br><br>
      * <br>
      * @param {String} inLayerName String, Object or Array of urls to load as initial icons
-     * @param {Function} callback 
+     * @param {Function} callback
      * @param {Object} defaultOptions Object with properties used as default properties for the layer {@link _addLayers}
-     * @param {Array} linkedLayersArray Array of layerNames which are linked to the current layer     
+     * @param {Array} linkedLayersArray Array of layerNames which are linked to the current layer
      */
     addLayer = (inLayerName, inParam, defaultOptions = {visible: true}, linkedLayersArray = []) => {
         return new Promise((resolve, reject) => {
             const layerName = inLayerName && typeof inLayerName === 'string' && inLayerName.length ? inLayerName : `layer_${this.layers.length}`;
-            if(layerName == 'icon' && this.layers.hasOwnProperty(layerName)) {
+            if (layerName == 'icon' && this.layers.hasOwnProperty(layerName)) {
                 console.info("Cant replace base icon layer... Exiting...");
                 resolve();
                 return;
@@ -526,22 +534,22 @@ class SVGIcon {
             this._makeProxy(layerName, defaultOptions);
 
             var callback; // = inParam;
-            if(typeof inParam === 'function') {
+            if (typeof inParam === 'function') {
                 callback = inParam;
-            } else if(typeof inParam === 'string') {
+            } else if (typeof inParam === 'string') {
                 // poor man's svg check
-                if(inParam.endsWith('.svg')) {
+                if (inParam.endsWith('.svg')) {
                     return this.getIcon(inParam).then(svg => {
                         return this.addLayer(inLayerName, svg, defaultOptions, linkedLayersArray);
                     });
                 }
                 callback = (o) => `<g ${this._props(o)}>${inParam}</g>`;
-            } else if(inParam.constructor === SVGSVGElement) {
-                if(inParam.firstElementChild.hasAttribute("opacity")) {
+            } else if (inParam.constructor === SVGSVGElement) {
+                if (inParam.firstElementChild.hasAttribute("opacity")) {
                     const opc = inParam.firstElementChild.getAttribute("opacity");
                     this.layerProps[layerName].opacity = opc;
                 }
-                if(inParam.firstElementChild.hasAttribute("transform")) {
+                if (inParam.firstElementChild.hasAttribute("transform")) {
                     const transform = inParam.firstElementChild.getAttribute("transform");
                     this.layerProps[layerName].transform = transform;
                 }
@@ -571,12 +579,13 @@ class SVGIcon {
                     return callback(this.layerProps[layerName] || this._options);
                 },
                 set: (value, k) => {
-                    if(inLayerName === 'icon') {
+                    if (inLayerName === 'icon') {
                         console.error("Can't replace main icon layer... Exiting unchanged!");
                         return;
-                    };
+                    }
+                    ;
                     callback = (o) => `<g ${this._props(o)}>${value}</g>`;
-                    if(inLayerName === 'icon') {
+                    if (inLayerName === 'icon') {
                         this.icons[inLayerName] = value; ///+++andy
                         //console.log("----->> ", inLayerName, value);
                         // const svg = this.icons[inLayerName];
@@ -597,7 +606,7 @@ class SVGIcon {
 
             // add behaviour
             this[prop] = value => {
-                if(value !== undefined) {
+                if (value !== undefined) {
                     this.layerProps[layerName].visible = value;
                     linkedLayersArray.forEach(lyrNme => this.layerProps.hasOwnProperty(lyrNme) && (this.layerProps[lyrNme].visible = value));
                 }
@@ -613,21 +622,22 @@ class SVGIcon {
     };
 
     /**
-     * 
+     *
      * @param {String} inLayerName The name of the layer to remove
      */
     removeLayer = (inLayerName) => {
-        if(inLayerName && typeof inLayerName === 'string' && inLayerName.length && this.layers.hasOwnProperty(inLayerName)) {
+        if (inLayerName && typeof inLayerName === 'string' && inLayerName.length && this.layers.hasOwnProperty(inLayerName)) {
             const prop = `show${this.toTitleCase(inLayerName)}`;
             delete this[prop];
             delete this.layers[inLayerName];
         }
     };
+
     innerHTMLFn(options) {
         const getLyr = layerName => this.layerProps.hasOwnProperty(layerName) && this.layerProps[layerName].visible ? this.layers[layerName] : '';
         return `<svg xmlns = "http://www.w3.org/2000/svg" viewBox = "0 0 144 144"><defs><clipPath id="clip"><rect x="0" y="0" width="144" height="144" opacity="0" /></clipPath></defs>
                  <g opacity="${this._options.opacity}" transform="scale (${this._options.scale})" clip-path="url(#clip)">
-                 ${ this._options._layerOrder.map(getLyr).join('\n')}
+                 ${this._options._layerOrder.map(getLyr).join('\n')}
                  </g></svg>`;
     };
 
@@ -662,6 +672,7 @@ class SVGIcon {
     toBase64(containsUnicode = false) {
         return containsUnicode ? `data:image/svg+xml;base64,${this.utoa(this.innerHTMLFn())}` : `data:image/svg+xml;base64,${btoa(this.innerHTMLFn())}`;
     }
+
     toSVGDataURL(unencoded = false) {
         return unencoded ?
             `data:image/svg+xml,${this.innerHTMLFn()}` :
@@ -671,7 +682,7 @@ class SVGIcon {
     }
 
     toDataURL(type = 'image/png') {
-        switch(type) {
+        switch (type) {
             case 'image/jpeg':
             case 'image/png':
                 return this.toType(null, null, type);
@@ -691,15 +702,15 @@ class SVGIcon {
 
     async toSVG(elm, callback) {
         const svg = this.toSVGDataURL();
-        if(elm && elm instanceof Image) elm.src = svg;
-        if(callback) callback(svg);
+        if (elm && elm instanceof Image) elm.src = svg;
+        if (callback) callback(svg);
         return svg;
     }
 
     async toType(elm, callback, inType = 'image/png') {
         const type = ['image/jpeg', 'image/png'].includes(inType) ? inType : 'image/png';
         return await this.toElement(null, type, callback).then(dataUrl => {
-            if(elm && elm instanceof Image) elm.src = dataUrl;
+            if (elm && elm instanceof Image) elm.src = dataUrl;
             return dataUrl;
         });
     }
@@ -710,21 +721,21 @@ class SVGIcon {
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            if(_cb) _cb();
+            if (_cb) _cb();
         };
         img.onerror = (err) => //console.log("Error in toCanvas", err, elm, img, canvas, _cb);
-        img.src = this.toSVGDataURL();
+            img.src = this.toSVGDataURL();
     }
 
     async toElement(elm, type = 'image/png', _cb) {
         return new Promise(resolve => {
-            if(_cb) {
+            if (_cb) {
                 const canvas = document.createElement('canvas');
                 const sze = 288;
                 canvas.height = canvas.width = sze;
                 this.toCanvas(canvas, () => {
                     const dataUrl = canvas.toDataURL(type);
-                    if(_cb) _cb(dataUrl);
+                    if (_cb) _cb(dataUrl);
                     resolve(dataUrl);
                 }, elm);
             } else {
@@ -748,9 +759,9 @@ class SVGIcon {
     _makeProxy(layerName, defaultOptions) {
         const that = this;
         const handler = {
-            get: function(target, key) {
-                if(typeof target[key] === 'object' && target[key] !== null) {
-                    if(!(key in target)) {
+            get: function (target, key) {
+                if (typeof target[key] === 'object' && target[key] !== null) {
+                    if (!(key in target)) {
                         //console.log("KEY not found", key, target);
                     }
                     return new Proxy(target[key], handler);
@@ -758,8 +769,8 @@ class SVGIcon {
                     return target[key];
                 }
             },
-            set: function(target, key, value) {
-                if(target[key] !== value) {
+            set: function (target, key, value) {
+                if (target[key] !== value) {
                     target[key] = value;
                     that.update();
                 }
@@ -767,7 +778,7 @@ class SVGIcon {
             }
         };
         // merge automatically added properties
-        if(this.layerProps.hasOwnProperty(layerName)) {
+        if (this.layerProps.hasOwnProperty(layerName)) {
             defaultOptions = Object.assign(defaultOptions, this.layerProps[layerName]);
         }
         this.layerProps[layerName] = new Proxy(defaultOptions, handler);
@@ -778,13 +789,13 @@ class SVGIcon {
             enumerable: true,
             configurable: true,
             get: () => {
-                if(typeof this._options[o] === 'function') {
+                if (typeof this._options[o] === 'function') {
                     return this._options[o]();
                 }
                 return this._options[o];
             },
             set: (v, k) => {
-                if(typeof this._options[o] === 'function') {
+                if (typeof this._options[o] === 'function') {
                     this._options[o](v, o);
                 } else {
                     this._options[o] = v;
@@ -797,23 +808,25 @@ class SVGIcon {
 
     _fixLayer = (lyr, attr) => {
         const a = lyr.getAttribute(attr);
-        if(a) lyr.setAttribute(attr, a.toLowerCase());
+        if (a) lyr.setAttribute(attr, a.toLowerCase());
     };
+
     /**
      * Update the icon and emit a 'changed' event, if the icon is unlocked
-     * @param {Boolean} unlock  'unlock' the icon 
+     * @param {Boolean} unlock  'unlock' the icon
      */
     update(unlock = false) {
-        if(this.element) {
+        if (this.element) {
             this.innerHTML(null, "Update").then(html => {
                 this.element.innerHTML = html;
             });
         }
-        if(unlock === true) this.updateLock = false;
-        if(!this.updateLock) {
+        if (unlock === true) this.updateLock = false;
+        if (!this.updateLock) {
             this.emit('changed');
         }
     }
+
     setOutputNode(el) {
         this.element = el;
     }
@@ -823,19 +836,24 @@ class SVGIcon {
         el.innerHTML = this.innerHTMLSync(options);
         // this.innerHTML(options).then(html => el.innerHTML = html);
     }
+
     /**
-     * 
+     *
      * @param {String} url      element-path (or relative path) to load
      * @param {Boolean} async   load sync (this is much faster in local environments)
      */
     loadSVGSync(url, async = false, cb) {
         const req = new XMLHttpRequest(); // use XMLHttpRequest, otherwise we can not run from the file:// protocol
-        if(!this._syncMode) req.responseType = "text"; //"application/xml"; // ""image/svg+xml";
+        if (!this._syncMode) req.responseType = "text"; //"application/xml"; // ""image/svg+xml";
         req.onload = () => {
-            if(cb) cb(req.response);
+            if (cb) cb(req.response);
             return (req.response);
         };
-        ['abort', 'error'].forEach((evt) => {req.addEventListener(evt, (error) => {console.log(error);});});
+        ['abort', 'error'].forEach((evt) => {
+            req.addEventListener(evt, (error) => {
+                console.log(error);
+            });
+        });
         req.open('GET', url, false); //false marks this as SYNCHRONOUS
         req.send();
         return req.response;
@@ -848,10 +866,10 @@ class SVGIcon {
      */
     loadSVG(url, inSync) {
         const useAsync = !this._syncMode;
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             const req = new XMLHttpRequest(); // use XMLHttpRequest, otherwise we can not run from the file:// protocol
             req.withCredentials = true; // should be default anyway
-            if(useAsync) req.responseType = "text"; //"application/xml"; // ""image/svg+xml";
+            if (useAsync) req.responseType = "text"; //"application/xml"; // ""image/svg+xml";
             req.onload = () => {
                 resolve({
                     ok: true,
@@ -859,12 +877,17 @@ class SVGIcon {
                     result: () => Promise.resolve(req.response)
                 });
             };
-            ['abort', 'error'].forEach((evt) => {req.addEventListener(evt, (error) => {reject(error);});});
+            ['abort', 'error'].forEach((evt) => {
+                req.addEventListener(evt, (error) => {
+                    reject(error);
+                });
+            });
             // req.open('GET', url);
             req.open('GET', url, useAsync);  //false marks this as SYNCHRONOUS
             req.send();
         });
     }
+
     /**
      * Return all loaded icons names
      * @returns {String}
@@ -872,6 +895,7 @@ class SVGIcon {
     async getIcons() {
         return this.getIconPromise.then(() => this.icons);
     }
+
     /**
      * Return an icon's svg
      * @returns {Object}
@@ -935,8 +959,8 @@ class SVGIcon {
 
 
     /**
-     * 
-     * @param {String} url 
+     *
+     * @param {String} url
      */
     async getIcon(url) {
         const tUrl = url ? url : this.url;
@@ -948,7 +972,7 @@ class SVGIcon {
     }
 
     /**
-     * 
+     *
      * @param {*} inIcons  String, Array, Object {@link SVGIcon}
      */
     loadIcons(inIcons, targetProperty = "icons") {
@@ -961,12 +985,12 @@ class SVGIcon {
             });
         };
 
-        if(Array.isArray(iconsToLoad)) { // allow ['./svgimages/AUX.svg', './svgimages/Browser.svg',...];
+        if (Array.isArray(iconsToLoad)) { // allow ['./svgimages/AUX.svg', './svgimages/Browser.svg',...];
             const allPromises = iconsToLoad.map(path => this.getIcon(path));
             return Promise.all(allPromises).then(icns => {
                 iconsToLoad.forEach((name, i) => {
                     const baseName = name.split("/").pop().split('.')[0];
-                    if(autoFixLayers) {
+                    if (autoFixLayers) {
                         autoFix(icns[i]);
                     }
                     this.id = baseName;
@@ -975,12 +999,12 @@ class SVGIcon {
                     // this.dbg('*** adding icon (1)', targetProperty, baseName);
                 });
             });
-        } else if(typeof iconsToLoad === 'object') {  // allow { "Aux": "./svgimages/AUX.svg", "Browser": "./svgimages/Browser.svg", ...}
+        } else if (typeof iconsToLoad === 'object') {  // allow { "Aux": "./svgimages/AUX.svg", "Browser": "./svgimages/Browser.svg", ...}
             const objs = Object.entries(iconsToLoad);
             const allPromises = objs.map(obj => this.getIcon(obj[1]));
             return Promise.all(allPromises).then(icns => {
                 objs.forEach((icn, i) => {
-                    if(autoFixLayers) {
+                    if (autoFixLayers) {
                         autoFix(icns[i]);
                     }
                     this.id = icn[0];
@@ -992,10 +1016,12 @@ class SVGIcon {
         }
 
     }
+
     /** DEBUGGING */
     setDbgWithColor(inTagClr, inId) {
         const tagClr = (inTagClr.includes('rgb') || inTagClr.charAt(0) == '#') ? inTagClr : `#${inTagClr}`;
-        this.dbg = this.debug ? console.log.bind(window.console, `%c[${inId || 'SVGIcon'}]`, `color:${tagClr};`) : () => {};
+        this.dbg = this.debug ? console.log.bind(window.console, `%c[${inId || 'SVGIcon'}]`, `color:${tagClr};`) : () => {
+        };
     }
 
     createIcon = (inSVGString = '') => {
@@ -1042,7 +1068,7 @@ const getFontSize = (options = {}) => { //thx gifshot! :)
 
     document.body.appendChild(span);
 
-    while((span.offsetWidth > options.width) && (fontSize >= minFontSize)) {
+    while ((span.offsetWidth > options.width) && (fontSize >= minFontSize)) {
         span.style.fontSize = --fontSize + 'px';
     }
 

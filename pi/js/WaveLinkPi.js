@@ -1,49 +1,69 @@
 /// <reference path="../../libs/js/stream-deck.js" />
 
-$SD.onConnected(async (jsn) => { 
+$SD.onConnected(async (jsn) => {
     await $SD.loadLocalization('../');
 
     context = jsn.actionInfo?.context;
     isEncoder = jsn.actionInfo?.payload?.controller === 'Encoder';
     platform = jsn?.appInfo?.application?.platform;
     settings = jsn.actionInfo?.payload?.settings;
-	deviceType = jsn.appInfo?.devices?.find(device => device.id == jsn.actionInfo?.device)?.type;
+    deviceType = jsn.appInfo?.devices?.find(device => device.id == jsn.actionInfo?.device)?.type;
     localization = $SD.localization['PI'];
 
-    $SD.sendToPlugin(context, { 'isReady': true });
+    $SD.sendToPlugin(context, {'isReady': true});
 });
 
-const setOutputAction = (jsn) => { if (checkAppState(jsn)) { setOutputActionSelection(jsn); }}
+const setOutputAction = (jsn) => {
+    if (checkAppState(jsn)) {
+        setOutputActionSelection(jsn);
+    }
+}
 $SD.onSendToPropertyInspector("com.elgato.wavelink.outputaction", setOutputAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.monitormute", setOutputAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.setvolumemonitor", setOutputAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.adjustvolumemonitor", setOutputAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.switchmonitoring", setOutputAction);
 
-const setInputAction = (jsn) => { if (checkAppState(jsn)) { setInputActionSelection(jsn); }}
+const setInputAction = (jsn) => {
+    if (checkAppState(jsn)) {
+        setInputActionSelection(jsn);
+    }
+}
 $SD.onSendToPropertyInspector("com.elgato.wavelink.inputaction", setInputAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.mixermute", setInputAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.setvolumemixer", setInputAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.adjustvolumemixer", setInputAction);
 
-const setEffectAction = (jsn) => { if (checkAppState(jsn)) { setEffectActionSelection(jsn); }}
+const setEffectAction = (jsn) => {
+    if (checkAppState(jsn)) {
+        setEffectActionSelection(jsn);
+    }
+}
 $SD.onSendToPropertyInspector("com.elgato.wavelink.effectaction", setEffectAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.seteffect", setEffectAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.seteffectchain", setEffectAction);
 
-const setHardwareAction = (jsn) => { if (checkAppState(jsn)) { setHardwareActionSelection(jsn); }}
+const setHardwareAction = (jsn) => {
+    if (checkAppState(jsn)) {
+        setHardwareActionSelection(jsn);
+    }
+}
 $SD.onSendToPropertyInspector("com.elgato.wavelink.hardwareaction", setHardwareAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.setmonitormixoutput", setHardwareAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.togglemonitormixoutput", setHardwareAction);
 $SD.onSendToPropertyInspector("com.elgato.wavelink.setmicsettings", setHardwareAction);
 
-const setSwitchProfileAction = (jsn) => { if (checkAppState(jsn)) { setProfileSelection(configureSwitchProfileAction = false); }}
+const setSwitchProfileAction = (jsn) => {
+    if (checkAppState(jsn)) {
+        setProfileSelection(configureSwitchProfileAction = false);
+    }
+}
 $SD.onSendToPropertyInspector("com.elgato.wavelink.switchprofiles", setSwitchProfileAction);
 
 const checkAppState = (jsn) => {
     isConnected = jsn?.payload?.isConnected ?? {};
     isUpToDate = jsn?.payload?.isUpToDate ?? {};
-    
+
     isOK = false;
 
     if (false) {
@@ -64,7 +84,7 @@ const checkAppState = (jsn) => {
         settings = jsn?.payload?.settings || settings;
     }
 
-    return isOK; 
+    return isOK;
 }
 
 const setAppNotConnected = () => {
@@ -82,7 +102,7 @@ const setAppNotUpToDate = () => {
 }
 
 const setNoMicrophoneConnected = () => {
-    document.getElementById("placeholder_Top2").innerHTML =  `<details class="message caution"><summary class="error">${localization['msgNoMicrophoneConnected']}</summary></details>`;
+    document.getElementById("placeholder_Top2").innerHTML = `<details class="message caution"><summary class="error">${localization['msgNoMicrophoneConnected']}</summary></details>`;
 }
 
 const hidePlaceholders = () => {
@@ -103,7 +123,7 @@ const setSettings = () => {
     options.forEach(option => {
         settings[option] = document.getElementById(option).value;
     });
-    
+
     $SD.setSettings(context, settings);
 }
 
@@ -124,10 +144,12 @@ const settingsMenu = () => {
 
     var setSettingsMenu;
 
-    options.forEach(option => { setSettingsMenu +=  '<div class="sdpi-item" id="your_name"> \
+    options.forEach(option => {
+        setSettingsMenu += '<div class="sdpi-item" id="your_name"> \
                                                         <div class="sdpi-item-label">' + option + '</div> \
                                                         <input class="sdpi-item-value" type="text" id="' + option + '" value="value"> \
-                                                    </div>' });
+                                                    </div>'
+    });
 
     setSettingsMenu += '<div class="sdpi-item" id="setSettings"> \
                             <button onclick="setSettings()" class="sdpi-item-value">Set settings</button> \
@@ -138,7 +160,9 @@ const settingsMenu = () => {
 
     document.getElementById("placeholder_Bottom2").innerHTML = setSettingsMenu;
 
-    options.forEach(option => { document.getElementById(option).value = settings[option]; });
+    options.forEach(option => {
+        document.getElementById(option).value = settings[option];
+    });
 }
 
 const setOutputActionSelection = (jsn) => {
@@ -155,13 +179,13 @@ const setOutputActionSelection = (jsn) => {
 
         setMixerSelection(true);
         setVolumeSelection();
-		setActionStyle();
+        setActionStyle();
     } else {
         const radioButtons = [
-            { value: ActionType.SetVolume, label: localization['actionSelection']['set']},
-            { value: ActionType.AdjustVolume, label: localization['actionSelection']['adjust']},
-            { value: ActionType.Mute, label: localization['actionSelection']['mute']},
-            { value: ActionType.SwitchOutput, label: localization['actionSelection']['toggleOutputMonitoring']}
+            {value: ActionType.SetVolume, label: localization['actionSelection']['set']},
+            {value: ActionType.AdjustVolume, label: localization['actionSelection']['adjust']},
+            {value: ActionType.Mute, label: localization['actionSelection']['mute']},
+            {value: ActionType.SwitchOutput, label: localization['actionSelection']['toggleOutputMonitoring']}
         ]
 
         hidePlaceholders();
@@ -210,14 +234,14 @@ const setInputActionSelection = (jsn) => {
         setInputSelection(jsn);
         setMixerSelection(true);
         setVolumeSelection();
-		setActionStyle();
+        setActionStyle();
     } else {
         const radioButtons = [
-            { value: ActionType.SetVolume, label: localization['actionSelection']['set']},
-            { value: ActionType.AdjustVolume, label: localization['actionSelection']['adjust']},
-            { value: ActionType.Mute, label: localization['actionSelection']['mute']}
+            {value: ActionType.SetVolume, label: localization['actionSelection']['set']},
+            {value: ActionType.AdjustVolume, label: localization['actionSelection']['adjust']},
+            {value: ActionType.Mute, label: localization['actionSelection']['mute']}
         ]
-    
+
         hidePlaceholders();
 
         const onChangeFn = () => {
@@ -228,7 +252,7 @@ const setInputActionSelection = (jsn) => {
         }
 
         setRadioButtons(localization['actionSelection']['label'], radioButtons, 'placeholder_Top1', 'actionType', onChangeFn);
-    
+
         switch (settings.actionType) {
             case ActionType.Mute:
                 setInputSelection(jsn);
@@ -248,7 +272,7 @@ const setInputActionSelection = (jsn) => {
                 setVolumeSelection();
                 setActionStyle();
                 setIsColoredCheckBox();
-                break;         
+                break;
             default:
                 break;
         }
@@ -257,8 +281,8 @@ const setInputActionSelection = (jsn) => {
 
 const setEffectActionSelection = (jsn) => {
     const radioButtons = [
-        { value: ActionType.SetEffect, label: localization['effectActions']['toggleEffect']},
-        { value: ActionType.SetEffectChain, label: localization['effectActions']['toggleEffectChain']}
+        {value: ActionType.SetEffect, label: localization['effectActions']['toggleEffect']},
+        {value: ActionType.SetEffectChain, label: localization['effectActions']['toggleEffectChain']}
     ]
 
     hidePlaceholders();
@@ -272,7 +296,7 @@ const setEffectActionSelection = (jsn) => {
         case ActionType.SetEffectChain:
             setInputSelection(jsn);
             setMixerSelection();
-            break;          
+            break;
         default:
             break;
     }
@@ -298,9 +322,9 @@ const setHardwareActionSelection = (jsn) => {
         setMicSettings(jsn);
     } else {
         const radioButtons = [
-            { value: ActionType.SetOutput, label: localization['actionSelection']['setOutputDevice']},
-            { value: ActionType.ToggleOutput, label: localization['actionSelection']['toggleOutputDevice']},
-            { value: ActionType.SetDeviceSettings, label: localization['actionSelection']['hardwareSettings']}
+            {value: ActionType.SetOutput, label: localization['actionSelection']['setOutputDevice']},
+            {value: ActionType.ToggleOutput, label: localization['actionSelection']['toggleOutputDevice']},
+            {value: ActionType.SetDeviceSettings, label: localization['actionSelection']['hardwareSettings']}
         ]
 
         hidePlaceholders();
@@ -332,12 +356,13 @@ const setOutputSelection = (jsn) => {
                                 <div class="sdpi-item"> \
                                     <div class="sdpi-item-label">' + outputSelectionLocal['label'] + '</div> \
                                     <select class="sdpi-item-value select" id="primary-select">'
-                                        + outputs.map( output => {
-                                            return "<option value='" + output.identifier + "'>" + cutText(output.name, 27) + "</option>"
-                                        }); +
-                                    '</select> \
-                                </div> \
-                            </div>';
+        + outputs.map(output => {
+            return "<option value='" + output.identifier + "'>" + cutText(output.name, 27) + "</option>"
+        });
+    +
+        '</select> \
+    </div> \
+</div>';
 
     document.getElementById("placeholder_Bottom2").innerHTML = setOutputSelection;
 
@@ -357,24 +382,24 @@ const toggleOutputSelection = (jsn) => {
                                 <div class="sdpi-item"> \
                                     <div class="sdpi-item-label">' + outputSelectionLocal['labelPrimary'] + '</div> \
                                     <select class="sdpi-item-value select" id="primary-select">'
-                                        + outputs.map( output => {
-                                            if (output.identifier == settings.secOutput)
-                                                return
-                                            else
-                                                return "<option value='" + output.identifier + "'>" + cutText(output.name, 27) + "</option>"
-                                        });
-    setOutputSelection +=           '</select> \
+        + outputs.map(output => {
+            if (output.identifier == settings.secOutput)
+                return
+            else
+                return "<option value='" + output.identifier + "'>" + cutText(output.name, 27) + "</option>"
+        });
+    setOutputSelection += '</select> \
                                     </div> \
                                 <div class="sdpi-item"> \
                                     <div class="sdpi-item-label">' + outputSelectionLocal['labelSecondary'] + '</div> \
                                     <select class="sdpi-item-value select" id="secondary-select">'
-                                        + outputs.map( output => {
-                                            if (output.identifier == settings.primOutput)
-                                                return
-                                            else
-                                                return "<option value='" + output.identifier + "'>" + cutText(output.name, 27) + "</option>"
-                                        });
-    setOutputSelection +=           '</select> \
+        + outputs.map(output => {
+            if (output.identifier == settings.primOutput)
+                return
+            else
+                return "<option value='" + output.identifier + "'>" + cutText(output.name, 27) + "</option>"
+        });
+    setOutputSelection += '</select> \
                                 </div> \
                             </div>';
 
@@ -398,12 +423,12 @@ const toggleOutputSelection = (jsn) => {
 }
 
 const setMicSettings = (jsn) => {
-	const inputs = jsn?.payload?.inputs || [];
-	var micIsAvailable = false;
+    const inputs = jsn?.payload?.inputs || [];
+    var micIsAvailable = false;
 
-	jsn?.payload?.microphones.forEach(mic => {
-		micIsAvailable = micIsAvailable ? micIsAvailable : inputs.find(input => input.identifier == mic.identifier).isAvailable;
-	});
+    jsn?.payload?.microphones.forEach(mic => {
+        micIsAvailable = micIsAvailable ? micIsAvailable : inputs.find(input => input.identifier == mic.identifier).isAvailable;
+    });
 
     if (!micIsAvailable) {
         setNoMicrophoneConnected();
@@ -413,9 +438,9 @@ const setMicSettings = (jsn) => {
     const micSettingsLocal = localization['micSettings'];
 
     var actionSelection;
-    
+
     if (isEncoder) {
-        actionSelection =   `<div class="sdpi-wrapper" id="action-select-div"> \
+        actionSelection = `<div class="sdpi-wrapper" id="action-select-div"> \
                                 <div class="sdpi-item"> \
                                     <div class="sdpi-item-label">${micSettingsLocal['label']}</div> \
                                         <select class="sdpi-item-value select" id="action-select"> \
@@ -427,7 +452,7 @@ const setMicSettings = (jsn) => {
                                     </div> \
                                 </div>`;
     } else {
-        actionSelection =   `<div class="sdpi-wrapper" id="action-select-div"> \
+        actionSelection = `<div class="sdpi-wrapper" id="action-select-div"> \
                                 <div class="sdpi-item"> \
                                     <div class="sdpi-item-label">${micSettingsLocal['label']}</div> \
                                         <select class="sdpi-item-value select" id="action-select"> \
@@ -529,8 +554,8 @@ const setMixerSelection = (isInput = false) => {
                                 <select class='sdpi-item-value select' id='inputmixer-select'> \
                                     <option value=${kPropertyMixerIDLocal}>${outputLocal['local']}</option> \
                                     <option value=${kPropertyMixerIDStream}>${outputLocal['stream']}</option>` +
-                                    allOption +
-                                `</select> \
+        allOption +
+        `</select> \
                             </div> \
                         </div>`;
 
@@ -546,7 +571,7 @@ const setMixerSelection = (isInput = false) => {
     } else if (settings.inputMixer == 'all') {
         delete settings.inputMixer;
         settings.mixerID = kPropertyMixerIDAll;
-    } 
+    }
 
     document.getElementById("inputmixer-select").value = settings.mixerID;
 
@@ -557,7 +582,7 @@ const setMixerSelection = (isInput = false) => {
 }
 
 const setInputSelection = (jsn) => {
-    
+
     const inputs = jsn?.payload?.inputs || [];
     const currentInput = inputs.find(input => input.identifier == settings.identifier);
     const mixerLocal = localization['mixerSelection'];
@@ -578,14 +603,14 @@ const setInputSelection = (jsn) => {
                             <div class='sdpi-item'> \
                                 <div class='sdpi-item-label'>" + label + "</div> \
                                 <select class='sdpi-item-value select' id='mixer-select'>"
-                                    + firstOption
-                                    + inputs.map( input => {
-                                            return `<option value="${input.identifier}">${input.name}</option>`
-                                        });
-                                    +
-                                "</select> \
-                            </div> \
-                        </div>";
+        + firstOption
+        + inputs.map(input => {
+            return `<option value="${input.identifier}">${input.name}</option>`
+        });
+    +
+        "</select> \
+    </div> \
+</div>";
 
     document.getElementById("placeholder_Top2").innerHTML = inputSelection;
 
@@ -595,7 +620,7 @@ const setInputSelection = (jsn) => {
 
     document.getElementById("mixer-select").value = settings.identifier || -1;
 
-    document.getElementById("mixer-select").addEventListener("change", mixerChanged = (inEvent) => {                          
+    document.getElementById("mixer-select").addEventListener("change", mixerChanged = (inEvent) => {
         settings.identifier = inEvent.target.value;
         settings.name = inputs.find(input => input.identifier == settings.identifier)?.name;
         $SD.setSettings(context, settings);
@@ -640,7 +665,7 @@ const setVolumeSelection = () => {
         sliderLabelMax = `<span class="clickable" value=${maxRange}>${labelPC}</span>`;
     }
 
-    const volumeAdjust =   `<div type="range" class="sdpi-item" id="volume-range"> \
+    const volumeAdjust = `<div type="range" class="sdpi-item" id="volume-range"> \
                                 <div class="sdpi-item-label">${volumeSelectionLocal['label']}</div> \
                                 <div class="sdpi-item-value"> \
                                     ${sliderLabelMin} \
@@ -664,7 +689,7 @@ const setVolumeSelection = () => {
         $SD.setSettings(context, settings);
     });
 
-    tooltip.textContent = (isEncoder ? '+/- ' +  adjustSlider.value : adjustSlider.value < 0 ? adjustSlider.value : '+' + (parseInt(adjustSlider.value) + 1)) + unit;
+    tooltip.textContent = (isEncoder ? '+/- ' + adjustSlider.value : adjustSlider.value < 0 ? adjustSlider.value : '+' + (parseInt(adjustSlider.value) + 1)) + unit;
 
     const fn = () => {
         const rangeRect = adjustSlider.getBoundingClientRect();
@@ -682,7 +707,7 @@ const setVolumeSelection = () => {
     if (adjustSlider) {
         adjustSlider.addEventListener(
             'mouseenter',
-            function() {
+            function () {
                 tooltip.classList.remove('hidden');
                 tooltip.classList.add('shown');
                 fn();
@@ -692,7 +717,7 @@ const setVolumeSelection = () => {
 
         adjustSlider.addEventListener(
             'mouseout',
-            function() {
+            function () {
                 tooltip.classList.remove('shown');
                 tooltip.classList.add('hidden');
                 fn();
@@ -707,8 +732,8 @@ const setVolumeSelection = () => {
 const setVolumeRange = (jsn) => {
     const volumeRangeLocal = localization['volumeRange'];
 
-    const { payload } = jsn;
-    const { microphones } = payload;
+    const {payload} = jsn;
+    const {microphones} = payload;
 
     var lookupTableConverter;
 
@@ -726,11 +751,11 @@ const setVolumeRange = (jsn) => {
     const minRange = 0
     const maxRange = lookupTableConverter ? lookupTableConverter.length - 1 : 100;
 
-    const label = settings.micSettingsAction == "setGain" ? volumeRangeLocal['setGain'] : settings.micSettingsAction == "setMicPC" ? volumeRangeLocal['setMic']: volumeRangeLocal['setVol'];
+    const label = settings.micSettingsAction == "setGain" ? volumeRangeLocal['setGain'] : settings.micSettingsAction == "setMicPC" ? volumeRangeLocal['setMic'] : volumeRangeLocal['setVol'];
     const labelMic = settings.micSettingsAction == "setMic/PcBalance" ? volumeRangeLocal['mic'] : lookupTableConverter ? lookupTableConverter.getSecondValueFromIndex(minRange) : "0";
     const labelPC = settings.micSettingsAction == "setMic/PcBalance" ? volumeRangeLocal['pc'] : lookupTableConverter ? lookupTableConverter.getSecondValueFromIndex(maxRange) : "100";
 
-    const volumeRange =   `<div type="range" class="sdpi-item" id="volume-range"> \
+    const volumeRange = `<div type="range" class="sdpi-item" id="volume-range"> \
                             <div class="sdpi-item-label">${label}</div> \
                             <div class="sdpi-item-value"> \
                                 <span class="clickable" value=${minRange}>${labelMic}</span> \
@@ -746,7 +771,7 @@ const setVolumeRange = (jsn) => {
     const tw = tooltip.getBoundingClientRect().width;
 
     // Select the saved VolumeValue
-    if (settings.volValue >= 0) { 
+    if (settings.volValue >= 0) {
         document.getElementById("vol-range").value = settings.volValue;
     } else {
         settings.volValue = 0;
@@ -756,8 +781,7 @@ const setVolumeRange = (jsn) => {
     tooltip.textContent = lookupTableConverter ? lookupTableConverter.getSecondValueFromIndex(sliderRange.value) + ' dB' : settings.volValue + ' %';
 
     // If rangeslider changed, save the new VolumeValue
-    document.getElementById("volume-range").addEventListener("change", volumeChanged = (inEvent) => 
-    {
+    document.getElementById("volume-range").addEventListener("change", volumeChanged = (inEvent) => {
         settings.volValue = parseInt(inEvent.target.value);
         $SD.setSettings(context, settings);
     })
@@ -778,7 +802,7 @@ const setVolumeRange = (jsn) => {
     if (sliderRange) {
         sliderRange.addEventListener(
             'mouseenter',
-            function() {
+            function () {
                 tooltip.classList.remove('hidden');
                 tooltip.classList.add('shown');
                 fn();
@@ -788,7 +812,7 @@ const setVolumeRange = (jsn) => {
 
         sliderRange.addEventListener(
             'mouseout',
-            function() {
+            function () {
                 tooltip.classList.remove('shown');
                 tooltip.classList.add('hidden');
                 fn();
@@ -803,7 +827,7 @@ const setFading = () => {
     const fadingLocal = localization['fadingSelection'];
     const unit = fadingLocal['unit'];
 
-    var fadingSelection =   `<div class="sdpi-wrapper" id="volume-select-div"> \
+    var fadingSelection = `<div class="sdpi-wrapper" id="volume-select-div"> \
                                 <div class="sdpi-item"> \
                                     <div class="sdpi-item-label">${fadingLocal['label']}</div> \
                                     <select class="sdpi-item-value select" id="fading-select"> \
@@ -817,7 +841,7 @@ const setFading = () => {
                                     </select> \
                                 </div> \
                             </div>`;
-                            
+
 
     document.getElementById("placeholder_Middle2").innerHTML = fadingSelection;
 
@@ -834,27 +858,27 @@ const setFading = () => {
 }
 
 const setActionStyle = () => {
-	const localSlider = localization['actionStyle'];
-	const label = isEncoder ? 'Style' : localSlider['label'];
+    const localSlider = localization['actionStyle'];
+    const label = isEncoder ? 'Style' : localSlider['label'];
 
-	var options = '';
+    var options = '';
 
-	if (isEncoder) {
-		options =	`<option value=0>Level meter + Volume slider</option>
+    if (isEncoder) {
+        options = `<option value=0>Level meter + Volume slider</option>
 					<option value=1>Level meter</option>
 					<option value=2>Volume slider</option>`
-	} else {
-		options =	`<option value=0>${localSlider['static']}</option>
+    } else {
+        options = `<option value=0>${localSlider['static']}</option>
 					<option value=1>${localSlider['sliderVertical']}</option>
 					<option value=2>${localSlider['sliderHorizontal']}</option>
 					<option value=3>${localSlider['sliderAndLevelmeterVertical']}</option>
 					<option value=4>${localSlider['sliderAndLevelmeterHorizontal']}</option>`
-	}
+    }
 
-	if (settings.actionStyle == undefined) {
-		settings.actionStyle = 0;
-		$SD.setSettings(context, settings);
-	}
+    if (settings.actionStyle == undefined) {
+        settings.actionStyle = 0;
+        $SD.setSettings(context, settings);
+    }
 
     const sliderSelection = `<div class='mixer-sdpi-wrapper' id='slider-select-div'> \
                                 <div class='sdpi-item'> \
@@ -867,44 +891,44 @@ const setActionStyle = () => {
 
     document.getElementById("placeholder_Middle2").innerHTML = sliderSelection;
 
-	if (isEncoder && settings.micSettingsAction == kPropertyAdjustMicPcBalance) {
-		document.getElementById("slider-select").value = 2;
-		document.getElementById("slider-select").disabled = true;
-	} else {
-		document.getElementById("slider-select").value = settings.actionStyle;
-	}
+    if (isEncoder && settings.micSettingsAction == kPropertyAdjustMicPcBalance) {
+        document.getElementById("slider-select").value = 2;
+        document.getElementById("slider-select").disabled = true;
+    } else {
+        document.getElementById("slider-select").value = settings.actionStyle;
+    }
 
     document.getElementById("slider-select").addEventListener("change", (inEvent) => {
-    settings.actionStyle = parseInt(inEvent.target.value);
-    $SD.setSettings(context, settings);
+        settings.actionStyle = parseInt(inEvent.target.value);
+        $SD.setSettings(context, settings);
     });
 }
 
 const setFilterSelection = (jsn) => {
-    const inputs        = jsn?.payload?.inputs;
-    const filterList    = inputs.find(input => input.identifier == settings.identifier).filters;
-    const filterLocal   = localization['filterSelection'];
-    const label         = filterLocal['label'];
-    const noFilter      = filterLocal['noFilterFound'];
-    
+    const inputs = jsn?.payload?.inputs;
+    const filterList = inputs.find(input => input.identifier == settings.identifier).filters;
+    const filterLocal = localization['filterSelection'];
+    const label = filterLocal['label'];
+    const noFilter = filterLocal['noFilterFound'];
+
     var filterSelection = "<div class='mixer-sdpi-wrapper' id='filter-select-div'> \
                             <div class='sdpi-item'> \
                                 <div class='sdpi-item-label'>" + label + "</div> \
                                 <select class='sdpi-item-value select' id='filter-select'>"
 
-    if (filterList && filterList.length > 0) { 
-        filterList.map( filter => {
+    if (filterList && filterList.length > 0) {
+        filterList.map(filter => {
             filterSelection += "<option value=" + filter.filterID + ">" + filter.name + "</option>"
         });
-    } else 
-        filterSelection +=  "<option value=0>" + noFilter + "</option>"
+    } else
+        filterSelection += "<option value=0>" + noFilter + "</option>"
 
-    filterSelection +=          "</select> \
+    filterSelection += "</select> \
                             </div> \
                         </div>";
-                       
+
     document.getElementById("placeholder_Bottom1").innerHTML = filterSelection;
-   
+
     if (filterList && filterList.length > 0) {
         const filter = filterList.find(filter => filter.filterID == settings.filterID);
         document.getElementById("filter-select").value = filter != undefined ? filter.filterID : 0;
@@ -919,9 +943,9 @@ const setFilterSelection = (jsn) => {
 const setIsColoredCheckBox = () => {
     if (platform == "mac") {
         return;
-    } 
+    }
 
-    const label      = localization['colored']['label'];
+    const label = localization['colored']['label'];
 
     const isColoredCheck = `<div type="checkbox" class="sdpi-item">
                                 <div class="sdpi-item-label">${label}</div>
@@ -969,18 +993,18 @@ const setProfileSelection = () => {
 }
 
 const setRadioButtons = (label, radioButtons, position, settingsProperty, additionalOnChangeFunction) => {
-    var selection =   "<div type='radio' class='sdpi-item' id='actionType-radio-div'> \
+    var selection = "<div type='radio' class='sdpi-item' id='actionType-radio-div'> \
                                     <div class='sdpi-item-label'>" + label + "</div> \
                                     <div class='sdpi-item-value'>";
-    
+
     radioButtons.forEach(rb => {
-        selection +=      `<span class='sdpi-item-child'> \
+        selection += `<span class='sdpi-item-child'> \
                                         <input id='${rb.label}' type='radio' value=${rb.value}> \
                                         <label for='${rb.label}' class='sdpi-item-label'><span></span>${rb.label}</label> \ 
                                     </span>`
     });
 
-    selection +=          "</div> \
+    selection += "</div> \
                                 </div>";
 
     document.getElementById(position).innerHTML = selection;
@@ -990,7 +1014,7 @@ const setRadioButtons = (label, radioButtons, position, settingsProperty, additi
 
         radioButton.checked = settings[settingsProperty] == radioButton.value;
 
-        radioButton.addEventListener("change", radioButtonChanged = (inEvent) => {   
+        radioButton.addEventListener("change", radioButtonChanged = (inEvent) => {
             //console.log("radioButtonChanged", settings[settingsProperty], 'to', inEvent.target.value)
             settings[settingsProperty] = parseInt(inEvent.target.value);
             if (additionalOnChangeFunction != undefined)
@@ -1010,6 +1034,6 @@ const cutText = (text, maxlen = 27, suffix = '...') => {
     });
 
     const newLength = maxlen + 21 - upperCaseCount;
-    
+
     return text ? (text && text.length > newLength ? text.slice(0, newLength - 1) + suffix : text) : '--';
 };

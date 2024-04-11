@@ -12,12 +12,12 @@ function _setTimer(callback, delay, type, params) {
     const id = ESDTimerWorker.timerId++;
     ESDTimerWorker.timers[id] = {callback, params};
     ESDTimerWorker.onmessage = (e) => {
-        if(ESDTimerWorker.timers[e.data.id]) {
-            if(e.data.type === 'clearTimer') {
+        if (ESDTimerWorker.timers[e.data.id]) {
+            if (e.data.type === 'clearTimer') {
                 delete ESDTimerWorker.timers[e.data.id];
             } else {
                 const cb = ESDTimerWorker.timers[e.data.id].callback;
-                if(cb && typeof cb === 'function') cb(...ESDTimerWorker.timers[e.data.id].params);
+                if (cb && typeof cb === 'function') cb(...ESDTimerWorker.timers[e.data.id].params);
             }
         }
     };
@@ -57,28 +57,30 @@ function timerFn() {
     let debug = false;
     let supportedCommands = ['setTimeout', 'setInterval', 'clearTimeout', 'clearInterval'];
 
-    function log(e) {console.log('Worker-Info::Timers', timers);}
+    function log(e) {
+        console.log('Worker-Info::Timers', timers);
+    }
 
     function clearTimerAndRemove(id) {
-        if(timers[id]) {
-            if(debug) console.log('clearTimerAndRemove', id, timers[id], timers);
+        if (timers[id]) {
+            if (debug) console.log('clearTimerAndRemove', id, timers[id], timers);
             clearTimeout(timers[id]);
             delete timers[id];
             postMessage({type: 'clearTimer', id: id});
-            if(debug) log();
+            if (debug) log();
         }
     }
 
-    onmessage = function(e) {
+    onmessage = function (e) {
         // first see, if we have a timer with this id and remove it
         // this automatically fulfils clearTimeout and clearInterval
         supportedCommands.includes(e.data.type) && timers[e.data.id] && clearTimerAndRemove(e.data.id);
-        if(e.data.type === 'setTimeout') {
+        if (e.data.type === 'setTimeout') {
             timers[e.data.id] = setTimeout(() => {
                 postMessage({id: e.data.id});
                 clearTimerAndRemove(e.data.id); //cleaning up
             }, e.data.delay || 0);
-        } else if(e.data.type === 'setInterval') {
+        } else if (e.data.type === 'setInterval') {
             timers[e.data.id] = setInterval(() => {
                 postMessage({id: e.data.id});
             }, e.data.delay || 0);

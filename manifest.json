@@ -1,391 +1,391 @@
 {
-    "SDKVersion": 2,
-    "Author": "Elgato, enhanced by Nevylish",
-    "CodePath": "index.html",
-    "PropertyInspectorPath": "pi/index.html",
-    "Description": "Control the Elgato Wave Link audio mixing application.",
-    "Category": "Wave Link",
-    "CategoryIcon": "images/sidebar/waveLink",
-    "Name": "Wave Link (Colored version)",
-    "Icon": "images/sidebar/waveLink_appIcon_store",
-    "URL": "https://nevylish.ch/twitter",
-    "Version": "2.1.1.5",
-    "OS": [
-        {
-            "Platform": "mac",
-            "MinimumVersion": "10.14"
-        },
-        {
-            "Platform": "windows",
-            "MinimumVersion": "10"
-        }
-    ],
-    "ApplicationsToMonitor": {
-        "mac": [
-            "com.elgato.WaveLink"
-        ],
-        "windows": [
-            "WaveLink.exe",
-            "Wave Link.exe",
-            "Elgato Wave Link.exe"
-        ]
+  "SDKVersion": 2,
+  "Author": "Elgato, enhanced by Nevylish",
+  "CodePath": "index.html",
+  "PropertyInspectorPath": "pi/index.html",
+  "Description": "Control the Elgato Wave Link audio mixing application.",
+  "Category": "Wave Link",
+  "CategoryIcon": "images/sidebar/waveLink",
+  "Name": "Wave Link (Colored version)",
+  "Icon": "images/sidebar/waveLink_appIcon_store",
+  "URL": "https://nevylish.ch/twitter",
+  "Version": "2.1.1.5",
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.14"
     },
-    "Software": {
-        "MinimumVersion": "4.0"
-    },
-    "Actions": [
-        {
-            "Icon": "images/sidebar/inputActions",
-            "Name": "Input",
-            "States": [
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Mute",
-                    "TitleAlignment": "top"
-                },
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Unmute",
-                    "TitleAlignment": "top"
-                }
-            ],
-            "Controllers": [
-                "Keypad",
-                "Encoder"
-            ],
-            "Encoder": {
-                "layout": "$B1",
-                "TriggerDescription": {
-                    "Rotate": "Adjust volume",
-                    "Touch": "Mute/unmute"
-                }
-            },
-            "UUID": "com.elgato.wavelink.inputaction"
-        },
-        {
-            "Icon": "images/sidebar/inputActions",
-            "Name": "Input",
-            "States": [
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Mute",
-                    "TitleAlignment": "top"
-                },
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Unmute",
-                    "TitleAlignment": "top"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Mute/unmute input",
-            "UUID": "com.elgato.wavelink.mixermute"
-        },
-        {
-            "Icon": "images/sidebar/inputActions",
-            "Name": "Input",
-            "States": [
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Set specific input level",
-            "UUID": "com.elgato.wavelink.setvolumemixer"
-        },
-        {
-            "Icon": "images/sidebar/inputActions",
-            "Name": "Input",
-            "States": [
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/inputActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Adjust input level in increments",
-            "UUID": "com.elgato.wavelink.adjustvolumemixer"
-        },
-        {
-            "Icon": "images/sidebar/outputActions",
-            "Name": "Output",
-            "States": [
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Mute",
-                    "TitleAlignment": "top"
-                },
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Unmute",
-                    "TitleAlignment": "top",
-                    "FontSize": "10"
-                }
-            ],
-            "Controllers": [
-                "Keypad",
-                "Encoder"
-            ],
-            "Encoder": {
-                "layout": "$B1",
-                "TriggerDescription": {
-                    "Rotate": "Adjust volume",
-                    "Touch": "Mute/unmute"
-                }
-            },
-            "Tooltip": "Mute/unmute output",
-            "UUID": "com.elgato.wavelink.outputaction"
-        },
-        {
-            "Icon": "images/sidebar/outputActions",
-            "Name": "Output",
-            "States": [
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Mute",
-                    "TitleAlignment": "top",
-                    "FontSize": "10"
-                },
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Unmute",
-                    "TitleAlignment": "top",
-                    "FontSize": "10"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Mute/unmute output",
-            "UUID": "com.elgato.wavelink.monitormute"
-        },
-        {
-            "Icon": "images/sidebar/outputActions",
-            "Name": "Output",
-            "States": [
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Set specific output level",
-            "UUID": "com.elgato.wavelink.setvolumemonitor"
-        },
-        {
-            "Icon": "images/sidebar/outputActions",
-            "Name": "Output",
-            "States": [
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Adjust output level in increments",
-            "UUID": "com.elgato.wavelink.adjustvolumemonitor"
-        },
-        {
-            "Icon": "images/sidebar/outputActions",
-            "Name": "Hardware",
-            "States": [
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/outputActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Listen to monitor or stream mix",
-            "UUID": "com.elgato.wavelink.switchmonitoring"
-        },
-        {
-            "Icon": "images/sidebar/hardwareActions",
-            "Name": "Hardware",
-            "States": [
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "Controllers": [
-                "Keypad",
-                "Encoder"
-            ],
-            "Encoder": {
-                "layout": "$B1",
-                "TriggerDescription": {
-                    "Rotate": "Adjust",
-                    "Touch": "Mute/unmute"
-                }
-            },
-            "Tooltip": "Control your hardware",
-            "UUID": "com.elgato.wavelink.hardwareaction"
-        },
-        {
-            "Icon": "images/sidebar/hardwareActions",
-            "Name": "Hardware",
-            "States": [
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Set monitor mix to a specific output",
-            "UUID": "com.elgato.wavelink.setmonitormixoutput"
-        },
-        {
-            "Icon": "images/sidebar/hardwareActions",
-            "Name": "Hardware",
-            "States": [
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Toggle between two monitor mix outputs",
-            "UUID": "com.elgato.wavelink.togglemonitormixoutput"
-        },
-        {
-            "Icon": "images/sidebar/hardwareActions",
-            "Name": "Hardware",
-            "States": [
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Mute"
-                },
-                {
-                    "Image": "images/key/hardwareActions/default",
-                    "Name": "Unmute"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Configure specific microphone settings",
-            "UUID": "com.elgato.wavelink.setmicsettings"
-        },
-        {
-            "Icon": "images/sidebar/effectActions",
-            "Name": "Effect",
-            "States": [
-                {
-                    "Name": "On",
-                    "Image": "images/key/effectActions/default"
-                },
-                {
-                    "Name": "Off",
-                    "Image": "images/key/effectActions/default"
-                }
-            ],
-            "Tooltip": "Control your configured effects",
-            "UUID": "com.elgato.wavelink.effectaction"
-        },
-        {
-            "Icon": "images/sidebar/effectActions",
-            "Name": "Effect",
-            "States": [
-                {
-                    "Name": "On",
-                    "Image": "images/key/effectActions/default"
-                },
-                {
-                    "Name": "Off",
-                    "Image": "images/key/effectActions/default"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Activate/Deactivate your configured effect for each channel",
-            "UUID": "com.elgato.wavelink.seteffect"
-        },
-        {
-            "Icon": "images/sidebar/effectActions",
-            "Name": "Effect",
-            "States": [
-                {
-                    "Name": "On",
-                    "Image": "images/key/effectActions/default"
-                },
-                {
-                    "Name": "Off",
-                    "Image": "images/key/effectActions/default"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Activate/Deactivate the effect chain for each channel",
-            "UUID": "com.elgato.wavelink.seteffectchain"
-        },
-        {
-            "Icon": "images/sidebar/inputActions",
-            "Name": "Switch Profiles",
-            "States": [
-                {
-                    "Image": "images/key/inputActions/default"
-                }
-            ],
-            "VisibleInActionsList": false,
-            "Tooltip": "Switch profiles",
-            "UUID": "com.elgato.wavelink.switchprofiles"
-        }
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "ApplicationsToMonitor": {
+    "mac": [
+      "com.elgato.WaveLink"
     ],
-    "Profiles": [
-        {
-            "Name": "Wave Link Monitoring",
-            "DeviceType": 0
-        },
-        {
-            "Name": "Wave Link Stream",
-            "DeviceType": 0
-        },
-        {
-            "Name": "Wave Link XL Monitoring",
-            "DeviceType": 2
-        },
-        {
-            "Name": "Wave Link XL Stream",
-            "DeviceType": 2
-        },
-        {
-            "Name": "Wave Link Monitoring",
-            "DeviceType": 3
-        },
-        {
-            "Name": "Wave Link Stream",
-            "DeviceType": 3
-        },
-        {
-            "Name": "Wave Link Plus",
-            "DeviceType": 7
-        }
+    "windows": [
+      "WaveLink.exe",
+      "Wave Link.exe",
+      "Elgato Wave Link.exe"
     ]
+  },
+  "Software": {
+    "MinimumVersion": "4.0"
+  },
+  "Actions": [
+    {
+      "Icon": "images/sidebar/inputActions",
+      "Name": "Input",
+      "States": [
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Mute",
+          "TitleAlignment": "top"
+        },
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Unmute",
+          "TitleAlignment": "top"
+        }
+      ],
+      "Controllers": [
+        "Keypad",
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "$B1",
+        "TriggerDescription": {
+          "Rotate": "Adjust volume",
+          "Touch": "Mute/unmute"
+        }
+      },
+      "UUID": "com.elgato.wavelink.inputaction"
+    },
+    {
+      "Icon": "images/sidebar/inputActions",
+      "Name": "Input",
+      "States": [
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Mute",
+          "TitleAlignment": "top"
+        },
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Unmute",
+          "TitleAlignment": "top"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Mute/unmute input",
+      "UUID": "com.elgato.wavelink.mixermute"
+    },
+    {
+      "Icon": "images/sidebar/inputActions",
+      "Name": "Input",
+      "States": [
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Set specific input level",
+      "UUID": "com.elgato.wavelink.setvolumemixer"
+    },
+    {
+      "Icon": "images/sidebar/inputActions",
+      "Name": "Input",
+      "States": [
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/inputActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Adjust input level in increments",
+      "UUID": "com.elgato.wavelink.adjustvolumemixer"
+    },
+    {
+      "Icon": "images/sidebar/outputActions",
+      "Name": "Output",
+      "States": [
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Mute",
+          "TitleAlignment": "top"
+        },
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Unmute",
+          "TitleAlignment": "top",
+          "FontSize": "10"
+        }
+      ],
+      "Controllers": [
+        "Keypad",
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "$B1",
+        "TriggerDescription": {
+          "Rotate": "Adjust volume",
+          "Touch": "Mute/unmute"
+        }
+      },
+      "Tooltip": "Mute/unmute output",
+      "UUID": "com.elgato.wavelink.outputaction"
+    },
+    {
+      "Icon": "images/sidebar/outputActions",
+      "Name": "Output",
+      "States": [
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Mute",
+          "TitleAlignment": "top",
+          "FontSize": "10"
+        },
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Unmute",
+          "TitleAlignment": "top",
+          "FontSize": "10"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Mute/unmute output",
+      "UUID": "com.elgato.wavelink.monitormute"
+    },
+    {
+      "Icon": "images/sidebar/outputActions",
+      "Name": "Output",
+      "States": [
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Set specific output level",
+      "UUID": "com.elgato.wavelink.setvolumemonitor"
+    },
+    {
+      "Icon": "images/sidebar/outputActions",
+      "Name": "Output",
+      "States": [
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Adjust output level in increments",
+      "UUID": "com.elgato.wavelink.adjustvolumemonitor"
+    },
+    {
+      "Icon": "images/sidebar/outputActions",
+      "Name": "Hardware",
+      "States": [
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/outputActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Listen to monitor or stream mix",
+      "UUID": "com.elgato.wavelink.switchmonitoring"
+    },
+    {
+      "Icon": "images/sidebar/hardwareActions",
+      "Name": "Hardware",
+      "States": [
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "Controllers": [
+        "Keypad",
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "$B1",
+        "TriggerDescription": {
+          "Rotate": "Adjust",
+          "Touch": "Mute/unmute"
+        }
+      },
+      "Tooltip": "Control your hardware",
+      "UUID": "com.elgato.wavelink.hardwareaction"
+    },
+    {
+      "Icon": "images/sidebar/hardwareActions",
+      "Name": "Hardware",
+      "States": [
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Set monitor mix to a specific output",
+      "UUID": "com.elgato.wavelink.setmonitormixoutput"
+    },
+    {
+      "Icon": "images/sidebar/hardwareActions",
+      "Name": "Hardware",
+      "States": [
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Toggle between two monitor mix outputs",
+      "UUID": "com.elgato.wavelink.togglemonitormixoutput"
+    },
+    {
+      "Icon": "images/sidebar/hardwareActions",
+      "Name": "Hardware",
+      "States": [
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Mute"
+        },
+        {
+          "Image": "images/key/hardwareActions/default",
+          "Name": "Unmute"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Configure specific microphone settings",
+      "UUID": "com.elgato.wavelink.setmicsettings"
+    },
+    {
+      "Icon": "images/sidebar/effectActions",
+      "Name": "Effect",
+      "States": [
+        {
+          "Name": "On",
+          "Image": "images/key/effectActions/default"
+        },
+        {
+          "Name": "Off",
+          "Image": "images/key/effectActions/default"
+        }
+      ],
+      "Tooltip": "Control your configured effects",
+      "UUID": "com.elgato.wavelink.effectaction"
+    },
+    {
+      "Icon": "images/sidebar/effectActions",
+      "Name": "Effect",
+      "States": [
+        {
+          "Name": "On",
+          "Image": "images/key/effectActions/default"
+        },
+        {
+          "Name": "Off",
+          "Image": "images/key/effectActions/default"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Activate/Deactivate your configured effect for each channel",
+      "UUID": "com.elgato.wavelink.seteffect"
+    },
+    {
+      "Icon": "images/sidebar/effectActions",
+      "Name": "Effect",
+      "States": [
+        {
+          "Name": "On",
+          "Image": "images/key/effectActions/default"
+        },
+        {
+          "Name": "Off",
+          "Image": "images/key/effectActions/default"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Activate/Deactivate the effect chain for each channel",
+      "UUID": "com.elgato.wavelink.seteffectchain"
+    },
+    {
+      "Icon": "images/sidebar/inputActions",
+      "Name": "Switch Profiles",
+      "States": [
+        {
+          "Image": "images/key/inputActions/default"
+        }
+      ],
+      "VisibleInActionsList": false,
+      "Tooltip": "Switch profiles",
+      "UUID": "com.elgato.wavelink.switchprofiles"
+    }
+  ],
+  "Profiles": [
+    {
+      "Name": "Wave Link Monitoring",
+      "DeviceType": 0
+    },
+    {
+      "Name": "Wave Link Stream",
+      "DeviceType": 0
+    },
+    {
+      "Name": "Wave Link XL Monitoring",
+      "DeviceType": 2
+    },
+    {
+      "Name": "Wave Link XL Stream",
+      "DeviceType": 2
+    },
+    {
+      "Name": "Wave Link Monitoring",
+      "DeviceType": 3
+    },
+    {
+      "Name": "Wave Link Stream",
+      "DeviceType": 3
+    },
+    {
+      "Name": "Wave Link Plus",
+      "DeviceType": 7
+    }
+  ]
 }

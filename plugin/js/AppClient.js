@@ -18,12 +18,13 @@ class AppClient {
 
     maxConnectionTries = 100;
     connectionTryCounter = 0;
-    isConnecting = false;
+	isConnecting = false;
+	stopReconnecting = false;
 
     debugMode = true;
 
     onEvent = EventEmitter.on;
-    emitEvent = EventEmitter.emit;
+	emitEvent = EventEmitter.emit;
 
     on = this.rpc.on;
     call = this.rpc.call;
@@ -36,7 +37,7 @@ class AppClient {
 
         this.setPort(minPort);
     }
-
+    
     setPort(minPort) {
         this.currentPort = minPort;
         this.minPort = minPort;
@@ -47,33 +48,34 @@ class AppClient {
         if (!this.currentPort || this.isConnected || this.isConnecting)
             return;
 
-        this.tryToConnect();
-    }
+		this.stopReconnecting = false;
+		this.tryToConnect();
+	}
 
     tryToConnect() {
         logInfo(`AppClient: Connecting to port ${this.currentPort}`);
 
-        this.isConnecting = true;
+		this.isConnecting = true;
 
-        setTimeout(() => this.reconnect(), 1000);
+		setTimeout(() => this.reconnect(), 1000);
 
-        if (this.websocket) {
-            this.websocket.close();
-            this.websocket = null;
-        }
+		if (this.websocket) {
+			this.websocket.close();
+			this.websocket = null;
+		}
 
         this.websocket = new WebSocket('ws://127.0.0.1:' + this.currentPort);
 
-        this.websocket.rpc = this.rpc;
-
         this.websocket.onopen = () => {
-            logInfo(`AppClient: Connection opened.`);
+			logInfo(`AppClient: Connection opened.`);
             this.isConnected = true;
-            this.isConnecting = false;
+			this.isConnecting = false;
+
+            this.websocket.rpc = this.rpc;
             this.emitEvent("webSocketIsOpen");
         }
 
-        this.websocket.onclose = () => {
+        this.websocket.onclose = () =>  {
             logInfo(`AppClient: Connection closed.`);
             this.isConnected = false;
         }
@@ -99,24 +101,26 @@ class AppClient {
     reconnect() {
         this.currentPort = this.currentPort < this.maxPort ? ++this.currentPort : this.minPort;
 
-        if (this.connectionTryCounter < this.maxConnectionTries && this.websocket.readyState != 1) {
-            logInfo(`AppClient: Reconnecting.`);
+        if (this.connectionTryCounter < this.maxConnectionTries && this.websocket?.readyState != 1 && !this.stopReconnecting) {
+			logInfo(`AppClient: Reconnecting.`);
             this.connectionTryCounter++;
             this.tryToConnect();
         } else {
-            this.isConnecting = false;
+			this.isConnecting = false;
             this.connectionTryCounter = 0;
         }
     }
 
     disconnect() {
         if (this.websocket) {
+			this.stopReconnecting = true;
             this.websocket.close();
             this.websocket = null;
+            this.currentPort = this.minPort;
             this.emitEvent("webSocketIsClosed");
         }
 
-        this.connectionTryCounter = 0;
+		this.connectionTryCounter = 0;
     }
 
     initRPC() {

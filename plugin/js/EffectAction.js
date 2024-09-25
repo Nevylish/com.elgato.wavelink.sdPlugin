@@ -3,38 +3,40 @@ class EffectAction extends WaveLinkAction {
 
         super(uuid);
 
-        this.onKeyUp(async ({context, payload}) => {
-            const {settings} = payload;
-            const {isInMultiAction} = payload;
+        this.onKeyUp(async ({ context, payload }) => {
+            const { settings } = payload;
+            const { isInMultiAction } = payload;
 
             try {
-                const identifier = this.getInputIdentifier(context, settings);
-                const input = this.wlc.getInput(identifier);
+                const input = this.wlc.getInput(settings.identifier);
 
                 if (input && input.isAvailable && input.filters && input.filters.length > 0) {
-
-
                     switch (settings.actionType) {
                         case ActionType.SetEffect:
-                            const newState = isInMultiAction ? !payload.userDesiredState : !input.filters.find(filter => filter.filterID == settings.filterID)?.isActive;
+							const filter = input.filters.find(filter => filter.filterID == settings.filterID);
 
-                            this.wlc.setFilterConfig(identifier, settings.filterID, newState);
+							if (filter == undefined)
+								throw `Error: Filter not available.`
+
+                            const newState = isInMultiAction ? !payload.userDesiredState : !filter?.isActive;
+
+                            this.wlc.setFilterConfig(input.identifier, settings.filterID, newState);
                             break;
                         case ActionType.SetEffectChain:
                             const filterBypass = isInMultiAction ? !!payload.userDesiredState : settings.mixerID == kPropertyMixerIDLocal ? !input.local.filterBypass : !input.stream.filterBypass;
 
-                            this.wlc.setFilterBypass(identifier, settings.mixerID, filterBypass);
+                            this.wlc.setFilterBypass(input.identifier, settings.mixerID, filterBypass);
                             break;
                         default:
                             throw `Action not selected`;
                     }
                 } else {
-                    throw "Error"
+                    throw `Error: ${input.isAvailable ? "" : "Input is not available"}${input.filters.length > 0 ? "" : "No input filters found"}`
                 }
             } catch (error) {
                 $SD.showAlert(context);
                 console.error(error);
-            }
+            } 
         });
 
         this.wlc.onEvent(kJSONPropertyInputsChanged, () => {
@@ -46,22 +48,23 @@ class EffectAction extends WaveLinkAction {
         });
 
         this.wlc.onEvent(kJSONPropertyFilterChanged, (payload) => {
-
             this.actions.forEach((action, context) => {
-                const settings = this.actions.get(context).settings;
+                const { settings }   = this.actions.get(context);
+                const { identifier } = this.wlc.getInput(settings.identifier);
 
-                if (settings.identifier == payload.identifier && settings.filterID == payload.filterID) {
+                if (identifier == payload.identifier && settings.filterID == payload.filterID) {
                     this.setState(context);
                     this.setTitle(context);
                 }
             });
         });
-
+        
         this.wlc.onEvent(kJSONPropertyFilterBypassStateChanged, (payload) => {
             this.actions.forEach((action, context) => {
-                const settings = action.settings;
+                const { settings }   = this.actions.get(context);
+                const { identifier } = this.wlc.getInput(settings.identifier);
 
-                if (settings.identifier == payload.identifier && settings.mixerID == payload.mixerID) {
+                if (identifier == payload.identifier && settings.mixerID == payload.mixerID) {
                     this.setState(context);
                 }
             });
@@ -88,21 +91,21 @@ class EffectAction extends WaveLinkAction {
                     break;
             }
 
-            const svgIcon = this.awl.keyIconsEffect[iconOn];
+            const svgIcon = this.awl.keyIconsEffect[iconOn]; 
             const svgIcon2 = this.awl.keyIconsEffect[iconOff];
 
             if (settings.actionType == ActionType.SetEffect) {
-                const identifier = this.getInputIdentifier(context, settings);
-                const input = this.wlc.getInput(identifier);
+
+                const input = this.wlc.getInput(settings.identifier);
 
                 if (input && input.isAvailable) {
                     const filter = input.filters ? input.filters.find(f => f.filterID == settings.filterID) : undefined;
                     const filterName = filter?.name || '';
-
-                    svgIcon.fontSize = {lower: 26};
-                    svgIcon.text = {lower: `${this.fixName(filterName, 9)}`};
-                    svgIcon2.fontSize = {lower: 26};
-                    svgIcon2.text = {lower: `${this.fixName(filterName, 9)}`};
+    
+                    svgIcon.fontSize = { lower: 26 };
+                    svgIcon.text = { lower: `${this.fixName(filterName, 9)}` };
+                    svgIcon2.fontSize = { lower: 26 };
+                    svgIcon2.text = { lower: `${this.fixName(filterName, 9)}` };
                 }
             }
 
@@ -116,8 +119,7 @@ class EffectAction extends WaveLinkAction {
 
     setState(context) {
         const settings = this.actions.get(context).settings;
-        const identifier = this.getInputIdentifier(context, settings);
-        const input = this.wlc.getInput(identifier);
+        const input = this.wlc.getInput(settings.identifier);
 
         if (input && input.filters) {
             if (settings.actionType == ActionType.SetEffect) {

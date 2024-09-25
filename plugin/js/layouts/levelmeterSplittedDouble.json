@@ -1,0 +1,42 @@
+{
+    "id" : "com.elgato.wavelink.testLevelmeter",
+    "items" : [
+        {
+            "key": "title",
+            "type": "text",
+            "rect": [16, 10, 136, 24],
+            "font": { "size": 16, "weight": 600 },
+            "alignment": "left"
+        },
+        {
+            "key": "icon1",
+            "type": "pixmap",
+            "rect": [16, 40, 24, 24]
+        },
+        {
+            "key": "icon2",
+            "type": "pixmap",
+            "rect": [16, 68, 24, 24]
+        },
+        {
+          "key": "levelmeterTop1",
+          "type": "pixmap",
+          "rect": [48, 48, 136, 3]
+        },
+        {
+          "key": "levelmeterBottom1",
+          "type": "pixmap",
+          "rect": [48, 53, 136, 3]
+        },
+        {
+            "key": "levelmeterTop2",
+            "type": "pixmap",
+            "rect": [48, 76, 136, 3]
+        },
+        {
+            "key": "levelmeterBottom2",
+            "type": "pixmap",
+            "rect": [48, 81, 136, 3]
+        }
+    ]
+}

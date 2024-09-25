@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Wave Link Property Inspector</title>
+        <link rel="stylesheet" href="../libs/css/sdpi.css">
+		<link rel="stylesheet" href="js/sdpi-custom.css">
+
+        <script src="../libs/js/constants.js"></script>
+        <script src="../libs/js/event-emitter.js"></script>
+        <script src="../libs/js/stream-deck.js"></script>
+        <script src="../libs/js/action.js"></script>
+
+        <script src="js/utils.js"></script>
+        <script src="../plugin/js/WaveLinkConstants.js"></script>
+        <script src="../plugin/js/LookupTable.js"></script> 
+        <script src="js/WaveLinkPi.js"></script>
+    </head>
+    <body>
+        <div class="sdpi-wrapper" id="pi">
+            <div id="placeholder_Top1"></div>
+            <div id="placeholder_Top2"></div>
+            <div id="placeholder_Middle1"></div>
+            <div id="placeholder_Middle2"></div>
+            <div id="placeholder_Bottom1"></div>  
+            <div id="placeholder_Bottom2"></div>    
+       	 	<div id="msg" class="sdpi-item hidden"></div>
+            <div class="sdpi-info-label hidden" style="top: -1000;" value="">TooltipText</div>
+        </div>
+    </body>
+</html>
